@@ -1,6 +1,6 @@
-# ChronoWrite - A MERN Stack Blog Website
+# ChronoWrite - A MERN Stack Networking Website
 
-[![Generic badge](https://img.shields.io/badge/Status-Development-<COLOR>.svg)](https://shields.io/) [![GitHub commits](https://badgen.net/github/commits/haneeshraj/chronowrite)](https://github.com/haneeshraj/chronowrite/commit/) [![GitHub latest commit](https://badgen.net/github/last-commit/haneeshraj/chronowrite)](https://GitHub.com/haneeshrak/chronowrite/commit/) [![GitHub forks](https://img.shields.io/github/forks/haneeshraj/chronowrite.svg?style=social&label=Fork&maxAge=2592000)](https://github.com/haneeshraj/chronowrite/network/) ![license](https://img.shields.io/badge/License-MIT-blue.svg)
+[![Generic badge](https://img.shields.io/badge/Status-Development-<COLOR>.svg)](https://shields.io/) [![GitHub commits](https://badgen.net/github/commits/SakethBhardwajV/ChronoWrite)](https://github.com/SakethBhardwajV/ChronoWrite/commit/) [![GitHub latest commit](https://badgen.net/github/last-commit/SakethBhardwajV/ChronoWrite)](https://GitHub.com/SakethBhardwajV/ChronoWrite/commit/) [![GitHub forks](https://img.shields.io/github/forks/SakethBhardwajV/ChronoWrite.svg?style=social&label=Fork&maxAge=2592000)](https://github.com/SakethBhardwajV/ChronoWrite/network/) ![license](https://img.shields.io/badge/License-MIT-blue.svg)
 
 ## Description
 
