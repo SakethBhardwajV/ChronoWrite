@@ -143,6 +143,31 @@ const deleteUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Follow user profile
+// @route   POST /api/users/follow/:user
+// @access  Private
+const followUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    try {
+      const otherUser = await User.findById(req.params.user).select(
+        "-password"
+      );
+      user.following.push(otherUser);
+      otherUser.followers.push(user);
+
+      res.status(200).json({ message: `Following ${otherUser.name}` });
+    } catch (error) {
+      res.status(404);
+      throw new Error("The User you're trying to find doesn't exist", error);
+    }
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
 // @desc    Make user a member
 // @route   PUT /api/users/member/:id
 // @access  Private/Admin
@@ -225,6 +250,7 @@ export {
   getUserProfile,
   updateUserProfile,
   deleteUserProfile,
+  followUser,
   makeUserMember,
   getUsers,
   getUserByID,
