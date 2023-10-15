@@ -128,7 +128,19 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @route   DELETE /api/users/profile
 // @access  Private
 const deleteUserProfile = asyncHandler(async (req, res) => {
-  res.json("delete user profile");
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    if (user.isAdmin) {
+      res.status(400);
+      throw new Error("Cannot delete admin user");
+    }
+    await User.deleteOne({ _id: user._id });
+    res.status(200).json({ message: "User deleted successfully" });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
 });
 
 // @desc    Make user a member
