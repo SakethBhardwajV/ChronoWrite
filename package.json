@@ -1,0 +1,30 @@
+{
+  "name": "chronowrite",
+  "version": "1.0.0",
+  "description": "ChronoWrite is an innovative and stylish networking website designed to deliver an exceptional reading and sharing news experience. Built using the MERN (MongoDB, Express.js, React, Node.js) stack and powered by Redux Toolkit, ChronoWrite reimagines blogging with a focus on modern aesthetics and user-friendly functionality.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node backend/server.js",
+    "server": "nodemon backend/server.js",
+    "client": "npm run dev --prefix frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SakethBhardwajV/ChronoWrite.git"
+  },
+  "author": "Haneesh Raj B and Saketh Bhardwaj V",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SakethBhardwajV/ChronoWrite/issues"
+  },
+  "homepage": "https://github.com/SakethBhardwajV/ChronoWrite#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.6.2"
+  }
+}
