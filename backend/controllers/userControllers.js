@@ -195,7 +195,27 @@ const deleteUserByID = asyncHandler(async (req, res) => {
 // @route   PUT /api/users/:id
 // @access  Private/Admin
 const updateUserByID = asyncHandler(async (req, res) => {
-  res.json("update user by id");
+  const user = await User.findById(req.params.id);
+
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.username = req.body.username || user.username;
+    user.isAdmin = Boolean(req.body.isAdmin);
+    user.isMember = Boolean(req.body.isBoolean);
+
+    const updatedUser = await user.save();
+
+    res.status(200).json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      username: updatedUser.username,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
 });
 
 export {
