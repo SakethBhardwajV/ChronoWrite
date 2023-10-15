@@ -1,4 +1,4 @@
-import express from "express";
+import express from 'express';
 import {
   getPostByID,
   getUserPosts,
@@ -12,22 +12,34 @@ import {
   superUnlikePost,
   updatePostByID,
   deletePostByID,
-} from "../controllers/postControllers.js";
+  addBookmarks,
+  removeBookmarks,
+  getAllBookmarkPosts,
+  getAllLikedPosts,
+} from '../controllers/postControllers.js';
+import { protect, admin, member } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
-router.post("/", createPost);
-router.get("/user/:userID", getUserPosts);
-router.get("/following", getFollowingPosts);
-router.put("/like/:id", likePost);
-router.put("/unlike/:id", unlikePost);
-router.put("/superlike/:id", superLikePost);
-router.put("/superunlike/:id", superUnlikePost);
+router.post('/', protect, createPost);
+router.get('/user/:userID', getUserPosts);
+router.get('/following', protect, getFollowingPosts);
+router.get('/liked').get(protect, getAllLikedPosts);
+router.put('/like/:id', protect, likePost);
+router.put('/unlike/:id', protect, unlikePost);
+router.put('/superlike/:id', protect, member, superLikePost);
+router.put('/superunlike/:id', protect, member, superUnlikePost);
 router
-  .route("/:id")
+  .route('/:id')
   .get(getPostByID)
-  .put(updatePostByID)
-  .delete(deletePostByID);
-router.route("/profile/:id").put(updateUserPost).delete(deleteUserPost);
+  .put(protect, admin, updatePostByID)
+  .delete(protect, admin, deletePostByID);
+router
+  .route('/profile/:id')
+  .put(protect, admin, updateUserPost)
+  .delete(protect, admin, deleteUserPost);
+router.get('/bookmarks').get(protect, getAllBookmarkPosts);
+router.route('/bookmark/add/:id').put(protect, addBookmarks);
+router.route('/bookmark/remove/:id').put(protect, removeBookmarks);
 
 export default router;
