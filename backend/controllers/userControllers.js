@@ -160,6 +160,11 @@ const followUser = asyncHandler(async (req, res) => {
     throw new Error("The User you're trying to find doesn't exist");
   }
 
+  if (user._id === otherUser._id) {
+    res.status(400);
+    throw new Error("You cannot follow yourself.");
+  }
+
   if (
     user.following.includes(otherUser._id) ||
     otherUser.followers.includes(user._id)
