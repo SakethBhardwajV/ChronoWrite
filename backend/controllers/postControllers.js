@@ -105,50 +105,197 @@ const deleteUserPost = asyncHandler(async (req, res) => {
 // @route   GET /api/posts/following
 // @access  Private
 const getFollowingPosts = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id).populate('following');
+  const user = await User.findById(req.user._id);
 
-  res.json(user);
+  const followingUsers = user.following;
+
+  let posts = [];
+
+  for (let i = 0; i < followingUsers.length; i++) {
+    const allPosts = await Post.find({ user: followingUsers[i] })
+      .populate('user', 'name username _id avatar isMember')
+      .sort({ createdAt: -1 });
+    posts = [...posts, ...allPosts];
+  }
+
+  res.json(posts);
 });
 
 // @desc    Like a post
 // @route   PUT /api/posts/like/:id
 // @access  Private
-const likePost = asyncHandler(async (req, res) => {});
+const likePost = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const post = await Post.findById(id);
+
+  if (!post) {
+    res.status(404);
+    throw new Error('Post not found');
+  }
+
+  if (post.likedBy.includes(req.user._id)) {
+    res.status(400);
+    throw new Error('Post already liked');
+  }
+
+  post.likedBy.push(req.user._id);
+
+  const updatedPost = await post.save();
+
+  res.json({ message: 'Post liked', post: updatedPost });
+});
 
 // @desc    Unlike a post
 // @route   PUT /api/posts/unlike/:id
 // @access  Private
-const unlikePost = asyncHandler(async (req, res) => {});
+const unlikePost = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const post = await Post.findById(id);
+
+  if (!post) {
+    res.status(404);
+    throw new Error('Post not found');
+  }
+
+  if (!post.likedBy.includes(req.user._id)) {
+    res.status(400);
+    throw new Error('Post has not been liked yet');
+  }
+
+  post.likedBy = post.likedBy.filter((like) => {
+    return like.toString() !== req.user._id.toString();
+  });
+
+  const updatedPost = await post.save();
+
+  res.json({ message: 'Post unliked', post: updatedPost });
+});
 
 // @desc    Add user to post's bookmarks
 // @route   PUT /api/posts/bookmark/add/:id
 // @access  Private
-const addBookmarks = asyncHandler(async (req, res) => {});
+const addBookmarks = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const post = await Post.findById(id);
+
+  if (!post) {
+    res.status(404);
+    throw new Error('Post not found');
+  }
+
+  if (post.bookmarkedBy.includes(req.user._id)) {
+    res.status(400);
+    throw new Error('Post already bookmarked');
+  }
+
+  post.bookmarkedBy.push(req.user._id);
+
+  const updatedPost = await post.save();
+
+  res.json({ message: 'Post bookmarked', post: updatedPost });
+});
 
 // @desc    Remove user to post's bookmarks
 // @route   PUT /api/posts/bookmark/remove/:id
 // @access  Private
-const removeBookmarks = asyncHandler(async (req, res) => {});
+const removeBookmarks = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const post = await Post.findById(id);
+
+  if (!post) {
+    res.status(404);
+    throw new Error('Post not found');
+  }
+
+  if (!post.bookmarkedBy.includes(req.user._id)) {
+    res.status(400);
+    throw new Error('Post has not been bookmarked yet');
+  }
+
+  post.bookmarkedBy = post.bookmarkedBy.filter((bookmark) => {
+    return bookmark.toString() !== req.user._id.toString();
+  });
+
+  const updatedPost = await post.save();
+
+  res.json({ message: 'Post unbookmarked', post: updatedPost });
+});
 
 // @desc    Get all user bookmarks
 // @route   GET /api/posts/bookmarks
 // @access  Private
-const getAllBookmarkPosts = asyncHandler(async (req, res) => {});
+const getAllBookmarkPosts = asyncHandler(async (req, res) => {
+  const posts = await Post.find({ bookmarkedBy: { $in: req.user._id } });
+
+  res.json(posts);
+});
 
 // @desc    Get all user liked posts
 // @route   GET /api/posts/liked
 // @access  Private
-const getAllLikedPosts = asyncHandler(async (req, res) => {});
+const getAllLikedPosts = asyncHandler(async (req, res) => {
+  const posts = await Post.find({
+    $or: [{ likedBy: req.user._id }, { superLikedBy: req.user._id }],
+  });
+
+  res.json(posts);
+});
 
 // @desc    Super Like a post
 // @route   PUT /api/posts/superlike/:id
 // @access  Private/Member
-const superLikePost = asyncHandler(async (req, res) => {});
+const superLikePost = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const post = await Post.findById(id);
+
+  if (!post) {
+    res.status(404);
+    throw new Error('Post not found');
+  }
+
+  if (post.superLikedBy.includes(req.user._id)) {
+    res.status(400);
+    throw new Error('Post already liked');
+  }
+
+  post.superLikedBy.push(req.user._id);
+
+  const updatedPost = await post.save();
+
+  res.json({ message: 'Post super liked', post: updatedPost });
+});
 
 // @desc    Super Unlike a post
 // @route   PUT /api/posts/superunlike/:id
 // @access  Private/Member
-const superUnlikePost = asyncHandler(async (req, res) => {});
+const superUnlikePost = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const post = await Post.findById(id);
+
+  if (!post) {
+    res.status(404);
+    throw new Error('Post not found');
+  }
+
+  if (!post.superLikedBy.includes(req.user._id)) {
+    res.status(400);
+    throw new Error('Post has not been super liked yet');
+  }
+
+  post.superLikedBy = post.superLikedBy.filter((like) => {
+    return like.toString() !== req.user._id.toString();
+  });
+
+  const updatedPost = await post.save();
+
+  res.json({ message: 'Post super unliked', post: updatedPost });
+});
 
 // @desc    Update post by ID
 // @route   PUT /api/posts/:id

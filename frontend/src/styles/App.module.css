@@ -1,0 +1,13 @@
+.primary-heading {
+  font-size: 6rem;
+}
+
+@media screen and (max-width: 600px) {
+  .primary-heading {
+    font-size: 4rem;
+  }
+}
+
+.margin-large {
+  margin: 3rem 0;
+}
