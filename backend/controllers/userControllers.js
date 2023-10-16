@@ -144,7 +144,7 @@ const deleteUserProfile = asyncHandler(async (req, res) => {
 });
 
 // @desc    Follow user profile
-// @route   POST /api/users/follow/:user
+// @route   PUT /api/users/follow/:user
 // @access  Private
 const followUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
@@ -157,7 +157,7 @@ const followUser = asyncHandler(async (req, res) => {
 
   if (!otherUser) {
     res.status(404);
-    throw new Error("The User you're trying to find doesn't exist", error);
+    throw new Error("The User you're trying to find doesn't exist");
   }
 
   if (
@@ -165,7 +165,7 @@ const followUser = asyncHandler(async (req, res) => {
     otherUser.followers.includes(user._id)
   ) {
     res.status(400);
-    throw new Error(`You already follow ${otherUser.username}`, error);
+    throw new Error(`You already follow ${otherUser.username}`);
   }
 
   user.following.push(otherUser._id);
@@ -175,6 +175,44 @@ const followUser = asyncHandler(async (req, res) => {
   await otherUser.save();
 
   res.status(200).json({ message: `Following ${otherUser.username}` });
+});
+
+// @desc    Unfollow user profile
+// @route   PUT /api/users/unfollow/:user
+// @access  Private
+const unFollowUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  const otherUser = await User.findById(req.params.user).select("-password");
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  if (!otherUser) {
+    res.status(404);
+    throw new Error("The User you're trying to find doesn't exist");
+  }
+
+  if (
+    !user.following.includes(otherUser._id) ||
+    !otherUser.followers.includes(user._id)
+  ) {
+    res.status(400);
+    throw new Error(`You are not following ${otherUser.username}`);
+  }
+
+  user.following = user.following.filter(
+    (item) => item._id.toString() !== otherUser._id.toString()
+  );
+  otherUser.followers = otherUser.followers.filter(
+    (item) => item._id.toString() !== user._id.toString()
+  );
+
+  await user.save();
+  await otherUser.save();
+
+  res.status(200).json({ message: `Unfollowed ${otherUser.username}` });
 });
 
 // @desc    Make user a member
@@ -260,6 +298,7 @@ export {
   updateUserProfile,
   deleteUserProfile,
   followUser,
+  unFollowUser,
   makeUserMember,
   getUsers,
   getUserByID,
