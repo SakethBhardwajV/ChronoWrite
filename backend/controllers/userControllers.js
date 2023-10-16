@@ -148,24 +148,33 @@ const deleteUserProfile = asyncHandler(async (req, res) => {
 // @access  Private
 const followUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
+  const otherUser = await User.findById(req.params.user).select("-password");
 
-  if (user) {
-    try {
-      const otherUser = await User.findById(req.params.user).select(
-        "-password"
-      );
-      user.following.push(otherUser);
-      otherUser.followers.push(user);
-
-      res.status(200).json({ message: `Following ${otherUser.name}` });
-    } catch (error) {
-      res.status(404);
-      throw new Error("The User you're trying to find doesn't exist", error);
-    }
-  } else {
+  if (!user) {
     res.status(404);
     throw new Error("User not found");
   }
+
+  if (!otherUser) {
+    res.status(404);
+    throw new Error("The User you're trying to find doesn't exist", error);
+  }
+
+  if (
+    user.following.includes(otherUser._id) ||
+    otherUser.followers.includes(user._id)
+  ) {
+    res.status(400);
+    throw new Error(`You already follow ${otherUser.username}`, error);
+  }
+
+  user.following.push(otherUser._id);
+  otherUser.followers.push(user._id);
+
+  await user.save();
+  await otherUser.save();
+
+  res.status(200).json({ message: `Following ${otherUser.username}` });
 });
 
 // @desc    Make user a member
