@@ -1,11 +1,10 @@
 import FormInput from './components/FormInput';
+import LandingPage from './screens/LandingPage';
 
 function App() {
   return (
     <>
-      <div>
-        <FormInput />
-      </div>
+      <LandingPage />
     </>
   );
 }
