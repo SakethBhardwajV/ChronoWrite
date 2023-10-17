@@ -1,5 +1,4 @@
 .btn {
-  width: 100%;
   font-family: inherit;
   padding-block: 1.4rem;
   border: none;
@@ -8,6 +7,13 @@
   font-size: 1.4rem;
   font-weight: 400;
   transition: all 200ms;
+  width: 100%;
+  padding-inline: 3rem;
+}
+
+.btn--block {
+  width: auto;
+  display: inline-block;
 }
 
 .btn--primary {

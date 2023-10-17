@@ -10,6 +10,12 @@
   font-family: inherit;
   font-weight: 300;
   transition: all 300ms;
+  display: inline-block;
+}
+
+.input--block {
+  display: inline-block;
+  width: 25rem;
 }
 
 .input:focus {
