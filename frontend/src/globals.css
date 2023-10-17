@@ -20,15 +20,15 @@ html {
   font-family: 'Poppins', sans-serif;
 }
 
-@media (max-width: 900px) {
-  html {
-    font-size: 50%;
-  }
-}
-
 @media (max-width: 1200px) {
   html {
     font-size: 56.25%;
+  }
+}
+
+@media (max-width: 900px) {
+  html {
+    font-size: 50%;
   }
 }
 
