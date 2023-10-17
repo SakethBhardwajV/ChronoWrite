@@ -1,0 +1,26 @@
+.btn {
+  width: 100%;
+  font-family: inherit;
+  padding-block: 1.4rem;
+  border: none;
+  outline: none;
+  border-radius: 1.2rem;
+  font-size: 1.4rem;
+  font-weight: 400;
+  transition: all 200ms;
+}
+
+.btn--primary {
+  background: var(--gradient-primary);
+  color: var(--text);
+}
+
+.btn--secondary {
+  background: var(--secondary);
+  color: var(--text);
+}
+
+.btn--tertiary {
+  background: var(--teriary);
+  color: var(--text);
+}

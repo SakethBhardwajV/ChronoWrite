@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+:root {
+  --background: linear-gradient(130deg, #0c0a15 0%, #180d26 100%);
+  --background-mobile: linear-gradient(130deg, #0c0a15 0%, #1d1429 100%);
+  --gradient-primary: linear-gradient(60deg, #5a64d9 0%, #5c33d4 100%);
+  --primary: #904bff;
+  --secondary: #5c33d4;
+  --teriary: #5a64d9;
+  --landing-nav-height: 13rem;
+  --text: #fff;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: 'Poppins', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 1.6rem;
+
+  background: var(--background);
+  color: var(--text);
+}
