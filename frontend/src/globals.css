@@ -9,11 +9,33 @@
   --teriary: #5a64d9;
   --landing-nav-height: 13rem;
   --text: #fff;
+  --q-phone: 37.5em;
+  --q-tab-port: 56.25em;
+  --q-tab-land: 75em;
+  --q-big-desktop: 112.5em;
 }
 
 html {
   font-size: 62.5%;
   font-family: 'Poppins', sans-serif;
+}
+
+@media (max-width: 900px) {
+  html {
+    font-size: 50%;
+  }
+}
+
+@media (max-width: 1200px) {
+  html {
+    font-size: 56.25%;
+  }
+}
+
+@media (min-width: 1800px) {
+  html {
+    font-size: 75%;
+  }
 }
 
 *,
