@@ -1,12 +1,5 @@
-import FormInput from './components/FormInput';
-import LandingPage from './screens/LandingPage';
-
 function App() {
-  return (
-    <>
-      <LandingPage />
-    </>
-  );
+  return <></>;
 }
 
 export default App;
