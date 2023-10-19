@@ -60,14 +60,12 @@ const RegisterScreen = () => {
               className="mb-2"
               onChange={(e) => setUsername(e.target.value)}
               value={username}
-              pattern="/^[_a-zA-Z0-9][a-zA-Z0-9._]{4,15}$/"
             />
             <FormInput
               placeholder="Name"
               className="mb-2"
               onChange={(e) => setName(e.target.value)}
               value={name}
-              pattern={"/^[A-Za-zs]{3,}$/"}
             />
             <FormInput
               type="email"
@@ -75,7 +73,6 @@ const RegisterScreen = () => {
               className="mb-2"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
-              pattern="/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,}$/"
             />
             <FormInput
               type="password"
@@ -83,7 +80,6 @@ const RegisterScreen = () => {
               className="mb-2"
               onChange={(e) => setPassword(e.target.value)}
               value={password}
-              pattern={`/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%\^&\*\(\)_\+\-=\[\]\{\};:'",<>.?/|])[A-Za-z\d!@#\$%\^&\*\(\)_\+\-=\[\]\{\};:'",<>.?/|]{8,}$/`}
             />
             <FormInput
               type="password"
