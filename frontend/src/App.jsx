@@ -1,11 +1,9 @@
-import styles from './styles/App.module.css';
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
     <>
-      <h1 className={`${styles['primary-heading']} ${styles['margin-large']}`}>
-        Hello world
-      </h1>
+      <Outlet />
     </>
   );
 }

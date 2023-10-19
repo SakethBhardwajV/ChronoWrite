@@ -1,0 +1,26 @@
+.input {
+  height: 5rem;
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: var(--text);
+  border-bottom: 1px solid #ffffff71;
+  font-size: 1.4rem;
+  font-family: inherit;
+  font-weight: 300;
+  transition: all 300ms;
+  display: inline-block;
+}
+
+.input--block {
+  display: inline-block;
+  width: 25rem;
+}
+
+.input:focus {
+  border-bottom: 1px solid #fff;
+}
+.input::placeholder {
+  font-size: 1.4rem;
+}

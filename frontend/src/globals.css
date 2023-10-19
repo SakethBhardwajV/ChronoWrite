@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+:root {
+  --background: linear-gradient(130deg, #0c0a15 0%, #180d26 100%);
+  --background-mobile: linear-gradient(130deg, #0c0a15 0%, #1d1429 100%);
+  --gradient-primary: linear-gradient(60deg, #5a64d9 0%, #5c33d4 100%);
+  --primary: #904bff;
+  --secondary: #5c33d4;
+  --teriary: #5a64d9;
+  --landing-nav-height: 13rem;
+  --text: #fff;
+  --secondary-text: rgba(255, 255, 255, 0.5);
+  --q-phone: 37.5em;
+  --q-tab-port: 56.25em;
+  --q-tab-land: 75em;
+  --q-big-desktop: 112.5em;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: "Poppins", sans-serif;
+}
+
+@media (max-width: 1200px) {
+  html {
+    font-size: 56.25%;
+  }
+}
+
+@media (max-width: 900px) {
+  html {
+    font-size: 50%;
+  }
+}
+
+@media (min-width: 1800px) {
+  html {
+    font-size: 75%;
+  }
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 1.6rem;
+  overflow-x: hidden;
+  background: var(--background);
+  color: var(--text);
+}
+
+.mb-2 {
+  margin-bottom: 2rem;
+}
+
+.mb-3 {
+  margin-bottom: 3rem;
+}
+
+.mb-4 {
+  margin-bottom: 4rem;
+}
+
+.mb-5 {
+  margin-bottom: 5rem;
+}
