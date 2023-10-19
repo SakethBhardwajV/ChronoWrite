@@ -1,29 +1,30 @@
-import PropTypes from 'prop-types';
-import styles from '../styles/Button.module.css';
+import PropTypes from "prop-types";
+import styles from "../styles/Button.module.css";
 
 const Button = ({
-  varient = '',
+  varient = "",
   onClick,
-  children = 'Enter Text',
+  children = "Enter Text",
   style,
   className,
-  type = '',
+  type = "",
 }) => {
   return (
     <button
       onClick={onClick}
       style={style}
       className={
-        ` ${styles['btn']} ${type === 'block' ? styles['btn--block'] : ''} ${
-          varient === 'primary'
-            ? styles['btn--primary']
-            : varient === 'secondary'
-            ? styles['btn--secondary']
-            : varient === 'tertiary'
-            ? styles['btn--tertiary']
-            : ''
+        ` ${styles["btn"]} ${type === "block" ? styles["btn--block"] : ""} ${
+          varient === "primary"
+            ? styles["btn--primary"]
+            : varient === "secondary"
+            ? styles["btn--secondary"]
+            : varient === "tertiary"
+            ? styles["btn--tertiary"]
+            : ""
         } ` + className
       }
+      type={type}
     >
       {children}
     </button>

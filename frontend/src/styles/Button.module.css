@@ -9,6 +9,16 @@
   transition: all 200ms;
   width: 100%;
   padding-inline: 3rem;
+  cursor: pointer;
+  transition: all 200ms;
+}
+
+.btn:hover {
+  scale: 1.02;
+}
+
+.btn:active {
+  scale: 0.98;
 }
 
 .btn--block {

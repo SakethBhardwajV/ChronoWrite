@@ -1,23 +1,25 @@
-import propTypes from 'prop-types';
-import styles from '../styles/FormInput.module.css';
+import propTypes from "prop-types";
+import styles from "../styles/FormInput.module.css";
 
 const FormInput = ({
-  type = 'text',
-  placeholder = 'bruh',
+  type = "text",
+  placeholder = "bruh",
   value,
   onChange,
   className,
   block,
+  pattern,
 }) => {
   return (
     <input
       className={
-        `${styles['input']} ${block && styles['input--block']} ` + className
+        `${styles["input"]} ${block && styles["input--block"]} ` + className
       }
       type={type}
       placeholder={placeholder}
       value={value}
       onChange={onChange}
+      pattern={pattern}
     />
   );
 };
