@@ -45,6 +45,29 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("User already exists with this username");
   }
 
+  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+  if (!emailRegex.test(email)) {
+    res.status(400);
+    throw new Error("Invalid email. Please enter a valid email address");
+  }
+
+  const usernameRegex = /^[_a-zA-Z0-9][a-zA-Z0-9._]{4,15}$/;
+  if (!usernameRegex.test(username)) {
+    res.status(400);
+    throw new Error(
+      "Invalid username. Make sure it is 4-15 characters long and does not start with a number or period"
+    );
+  }
+
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%\^&\*\(\)_\+\-=\[\]\{\};:'",<>.?/|])[A-Za-z\d!@#\$%\^&\*\(\)_\+\-=\[\]\{\};:'",<>.?/|]{8,}$/;
+  if (!passwordRegex.test(password)) {
+    res.status(400);
+    throw new Error(
+      "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+    );
+  }
+
   const user = await User.create({
     name,
     email,
