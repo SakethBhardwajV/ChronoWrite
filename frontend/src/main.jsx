@@ -12,12 +12,14 @@ import App from "./App.jsx";
 import "./globals.css";
 import LoginScreen from "./screens/LoginScreen.jsx";
 import RegisterScreen from "./screens/RegisterScreen";
+import VerifyScreen from "./screens/VerifyScreen";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="/login" element={<LoginScreen />} />
       <Route path="/register" element={<RegisterScreen />} />
+      <Route path="/verify/:id" element={<VerifyScreen />} />
     </Route>
   )
 );

@@ -2,6 +2,7 @@ import express from "express";
 import {
   authUser,
   registerUser,
+  checkUserVerified,
   logoutUser,
   getUserProfile,
   updateUserProfile,
@@ -20,6 +21,7 @@ const router = express.Router();
 
 router.route("/").get(protect, admin, getUsers).post(registerUser);
 router.post("/login", authUser);
+router.get("/verified/:id", checkUserVerified);
 router.post("/logout", protect, logoutUser);
 router.put("/follow/:user", protect, followUser);
 router.put("/unfollow/:user", protect, unFollowUser);

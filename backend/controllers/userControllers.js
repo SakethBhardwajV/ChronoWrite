@@ -1,6 +1,7 @@
 import asyncHandler from "../middlewares/asyncHandler.js";
 import User from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
+import sendEmail from "../config/sendEmail.js";
 
 // @desc    Auth user & get token
 // @route   POST /api/users/login
@@ -10,6 +11,11 @@ const authUser = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({ username });
 
+  if (!user.isVerified) {
+    res.status(400);
+    throw new Error("User is not verified");
+  }
+
   if (user && (await user.matchPassword(password))) {
     generateToken(res, user._id);
 
@@ -18,6 +24,7 @@ const authUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       username: user.username,
+      isVerified: user.isVerified,
     });
   } else {
     res.status(400);
@@ -75,6 +82,14 @@ const registerUser = asyncHandler(async (req, res) => {
     username,
   });
 
+  await sendEmail(
+    req,
+    res,
+    email,
+    "Verify your email",
+    `http://localhost:5173/verify/${user._id}`
+  );
+
   if (user) {
     generateToken(res, user._id);
 
@@ -88,6 +103,35 @@ const registerUser = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Invalid user data");
   }
+});
+
+// @desc    Check User is verified
+// @route   GET /api/users/verified/:id
+// @access  Private
+const checkUserVerified = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  if (user.isVerified) {
+    res.status(400);
+    throw new Error("User is already verified");
+  }
+
+  user.isVerified = true;
+
+  const updatedUser = await user.save();
+
+  res.status(200).json({
+    _id: updatedUser._id,
+    name: updatedUser.name,
+    email: updatedUser.email,
+    username: updatedUser.username,
+    isVerified: updatedUser.isVerified,
+  });
 });
 
 // @desc    Logout user / clear cookie
@@ -247,7 +291,28 @@ const unFollowUser = asyncHandler(async (req, res) => {
 // @route   PUT /api/users/member/:id
 // @access  Private/Admin
 const makeUserMember = asyncHandler(async (req, res) => {
-  res.json("make user member");
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  if (user.isMember) {
+    res.status(400);
+    throw new Error("User is already a member");
+  }
+
+  user.isMember = true;
+
+  const updatedUser = await user.save();
+
+  res.status(200).json({
+    _id: updatedUser._id,
+    name: updatedUser.name,
+    email: updatedUser.email,
+    username: updatedUser.username,
+  });
 });
 
 // @desc    Get users
@@ -321,6 +386,7 @@ const updateUserByID = asyncHandler(async (req, res) => {
 export {
   authUser,
   registerUser,
+  checkUserVerified,
   logoutUser,
   getUserProfile,
   updateUserProfile,

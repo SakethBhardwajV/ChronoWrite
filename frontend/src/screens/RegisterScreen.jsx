@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import styles from "../styles/RegisterScreen.module.css";
 import FormInput from "../components/FormInput";
 import Button from "../components/Button";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setCredentials } from "../slices/authSlice";
 import { useRegisterMutation } from "../slices/userApiSlice";
 const RegisterScreen = () => {
   const [email, setEmail] = useState("");
@@ -13,7 +12,6 @@ const RegisterScreen = () => {
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { userInfo } = useSelector((state) => state.auth);
@@ -39,7 +37,6 @@ const RegisterScreen = () => {
         email,
         password,
       }).unwrap();
-      dispatch(setCredentials({ ...res }));
       // navigate("/home");
       return;
     } catch (err) {

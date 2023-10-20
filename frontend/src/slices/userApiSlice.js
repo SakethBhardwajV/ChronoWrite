@@ -17,7 +17,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getVerify: builder.query({
+      query: (id) => ({
+        url: `${USERS_URL}/verified/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation } = userApiSlice;
+export const { useLoginMutation, useRegisterMutation, useGetVerifyQuery } =
+  userApiSlice;
