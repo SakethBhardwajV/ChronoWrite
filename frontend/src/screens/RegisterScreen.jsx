@@ -46,7 +46,7 @@ const RegisterScreen = () => {
 
   return (
     <div className={styles["parent"]}>
-      <div></div>
+      <div className={styles["image-container"]}></div>
       <div className={styles["register-container"]}>
         <div className={styles["register-form"]}>
           <h2 className={styles["secondary-heading"]}>Register</h2>
@@ -88,13 +88,14 @@ const RegisterScreen = () => {
             <Button type="submit" varient="tertiary" className="mb-2">
               Register
             </Button>
-            <p className={styles["text"]}>
-              -----------------------or-----------------------
-            </p>
+            <div className={styles["divider-container"]}>
+              <div className={styles["divider"]}></div>
+              <span className={styles["span-text"]}>OR</span>
+              <div className={styles["divider"]}></div>
+            </div>
             <Button
               type="button"
               varient="primary"
-              className="mb-2"
               onClick={() => navigate("/login")}
             >
               Login

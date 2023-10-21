@@ -1,4 +1,4 @@
-import { useEffect, useInsertionEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/LoginScreen.module.css";
@@ -38,7 +38,7 @@ const LoginScreen = () => {
 
   return (
     <div className={styles["parent"]}>
-      <div></div>
+      <div className={styles["image-container"]}></div>
       <div className={styles["login-container"]}>
         <div className={styles["login-form"]}>
           <h2 className={styles["secondary-heading"]}>Login</h2>
@@ -60,13 +60,14 @@ const LoginScreen = () => {
             <Button type="submit" varient="primary" className="mb-2">
               Login
             </Button>
-            <p className={styles["text"]}>
-              -----------------------or-----------------------
-            </p>
+            <div className={styles["divider-container"]}>
+              <div className={styles["divider"]}></div>
+              <span className={styles["span-text"]}>OR</span>
+              <div className={styles["divider"]}></div>
+            </div>
             <Button
               type="button"
               varient="tertiary"
-              className="mb-2"
               onClick={() => navigate("/register")}
             >
               Register
