@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 
 :root {
-  --background: linear-gradient(130deg, #0c0a15 0%, #180d26 100%);
+  --background: #0d0a1c;
   --background-mobile: linear-gradient(130deg, #0c0a15 0%, #1d1429 100%);
   --gradient-primary: linear-gradient(60deg, #5a64d9 0%, #5c33d4 100%);
   --primary: #904bff;
@@ -10,7 +10,7 @@
   --danger: #f24b40;
   --landing-nav-height: 13rem;
   --text: #fff;
-  --secondary-text: rgba(255, 255, 255, 0.5);
+  --secondary-text: rgba(255, 255, 255, 0.4);
   --q-phone: 37.5em;
   --q-tab-port: 56.25em;
   --q-tab-land: 75em;
