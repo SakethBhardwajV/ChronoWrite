@@ -101,3 +101,25 @@
 .post-input__button:hover {
   scale: 1.1;
 }
+
+@media (max-width: 1200px) {
+}
+
+@media (max-width: 900px) {
+  .main {
+    width: 90%;
+    max-width: 100rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .main {
+    width: 95%;
+  }
+  .post-input {
+    width: 100%;
+  }
+}
+
+@media (min-width: 1800px) {
+}
