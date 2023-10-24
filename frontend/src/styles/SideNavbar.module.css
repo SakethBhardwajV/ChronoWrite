@@ -80,7 +80,7 @@
     bottom: 0;
     padding-block: 0;
     justify-content: center;
-    background-color: var(--background-mobile);
+    background-color: var(--background);
   }
 
   .navbar__logo {
