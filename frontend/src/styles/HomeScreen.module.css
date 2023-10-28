@@ -1,0 +1,125 @@
+.container {
+  min-height: 100vh;
+}
+
+.main {
+  margin: 0 auto;
+  width: 75%;
+  min-height: 100vh;
+  max-width: 75rem;
+  padding-top: 5rem;
+}
+
+.post-input {
+  display: flex;
+  padding: 2rem 3rem;
+  gap: 2rem;
+  background-color: var(--post);
+  border-radius: 1rem;
+  width: 85%;
+  margin: 0 auto;
+  margin-bottom: 4rem;
+}
+
+/* .post-input__left {
+} */
+
+.post-input__img {
+  border-radius: 0.7rem;
+  height: 4rem;
+}
+
+.post-input__right {
+  width: 100%;
+}
+
+.post-input__text {
+  margin-bottom: 2rem;
+}
+
+.post-input__name {
+  font-size: 1.4rem;
+}
+
+.post-input__username {
+  font-size: 1.4rem;
+  opacity: 0.2;
+}
+
+.post-input__input {
+  width: 100%;
+  font-size: 1.4rem;
+  resize: none;
+  font-family: inherit;
+  background-color: transparent;
+  color: var(--text);
+  border: none;
+  margin-bottom: 1rem;
+}
+
+.post-input__input::-webkit-scrollbar,
+.post-input__input::-webkit-scrollbar-track,
+.post-input__input::-webkit-scrollbar-thumb {
+  display: none;
+}
+
+.post-input__input::placeholder {
+  color: rgba(255, 255, 255, 0.33);
+}
+
+.post-input__input:focus {
+  outline: none;
+}
+
+.post-input__counter {
+  font-size: 1rem;
+  color: var(--secondary-text);
+}
+
+.post-input__counter--limit {
+  color: var(--danger);
+  opacity: 40%;
+}
+
+.post-input__button {
+  font-size: 1.4rem;
+  padding: 0.75rem 3.5rem;
+  border-radius: 100rem;
+  float: right;
+  border-style: none;
+  color: var(--text);
+  background-color: var(--primary);
+  cursor: pointer;
+  transition: all 200ms;
+}
+
+.post-input__button:disabled {
+  background-color: var(--secondary-text);
+  cursor: not-allowed;
+}
+
+.post-input__button:hover {
+  scale: 1.1;
+}
+
+@media (max-width: 1200px) {
+}
+
+@media (max-width: 900px) {
+  .main {
+    width: 90%;
+    max-width: 100rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .main {
+    width: 95%;
+  }
+  .post-input {
+    width: 100%;
+  }
+}
+
+@media (min-width: 1800px) {
+}

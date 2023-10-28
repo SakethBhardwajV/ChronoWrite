@@ -1,0 +1,162 @@
+.post {
+  width: 85%;
+  margin: 0 auto;
+  display: flex;
+  padding: 2rem 3rem;
+  gap: 2rem;
+  border-radius: 1rem;
+  background-color: var(--post);
+}
+
+.post:not(:last-child) {
+  margin-bottom: 2rem;
+}
+
+.post__left {
+}
+
+.post__img {
+  border-radius: 0.7rem;
+  height: 4rem;
+}
+
+.post__right {
+  width: 100%;
+}
+
+.post__text {
+  margin-bottom: 2rem;
+}
+
+.post__name {
+  font-size: 1.4rem;
+}
+
+.post__username {
+  font-size: 1.4rem;
+  opacity: 0.2;
+}
+
+.post__content {
+}
+
+.post__btns {
+  margin-top: 2rem;
+}
+
+.post__button {
+  background-color: var(--icon-btn);
+  border-style: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  border-radius: 0.6rem;
+  height: 3.5rem;
+  cursor: pointer;
+  transition: all 200ms;
+}
+
+.post__button:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.post__button__icon {
+  height: 20px;
+  stroke: var(--secondary-text);
+  stroke-width: 2px;
+  margin: auto 0;
+  transition: all 200ms;
+  fill: transparent;
+}
+
+.post__button__icon:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.post__button--active .post__button__icon--like {
+  stroke: none;
+  transition: all 200ms;
+  fill: var(--danger) !important;
+}
+
+.post__button--active .post__button__icon--bookmark {
+  stroke: none;
+  transition: all 200ms;
+  fill: var(--info) !important;
+}
+
+.post__button--active .post__button__icon--superlike {
+  stroke: none;
+  transition: all 200ms;
+  fill: var(--warn) !important;
+}
+
+.post__button:hover {
+  background-color: var(--icon-btn--hover);
+}
+
+/* .post__button--like {
+}
+.post__button--comment {
+}
+.post__button--bookmark {
+}
+
+.post__button--superlike {
+}*/
+
+.post__button--share {
+  margin: 0 !important;
+}
+
+.post__button--share {
+  float: right;
+  margin-right: 0;
+}
+
+.post__button__count {
+  text-align: center;
+  font-size: 1.6rem;
+  color: var(--text);
+}
+
+.post__button--active {
+  background-color: var(--icon-btn--hover);
+}
+
+.post__share-container {
+  float: right;
+  position: relative;
+}
+
+@media (max-width: 1200px) {
+}
+
+@media (max-width: 900px) {
+  .main {
+    width: 90%;
+    max-width: 100rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .post {
+    width: 100%;
+    padding: 1.5rem 2rem;
+  }
+  .post__button__icon {
+    height: 16px;
+  }
+  .post__button__icon:not(:last-child) {
+    margin-left: -0.4rem;
+  }
+
+  .post__button__count {
+    font-size: 1.4rem;
+    margin-left: -0.7rem;
+  }
+}
+
+@media (min-width: 1800px) {
+}
