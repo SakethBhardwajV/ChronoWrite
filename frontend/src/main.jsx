@@ -16,6 +16,7 @@ import VerifyScreen from "./screens/VerifyScreen";
 import LandingScreen from "./screens/LandingScreen";
 import HomeScreen from "./screens/HomeScreen";
 import AuthRoute from "./components/AuthRoute";
+import BookmarksScreen from "./screens/BookmarksScreen";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
 
       <Route path="" element={<AuthRoute />}>
         <Route path="/home" element={<HomeScreen />} />
+        <Route path="/bookmarks" element={<BookmarksScreen />} />
       </Route>
     </>
   )
