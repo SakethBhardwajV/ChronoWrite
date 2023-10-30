@@ -1,7 +1,25 @@
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "../styles/SideNavbar.module.css";
-import { Link } from "react-router-dom";
+import { logout } from "../slices/authSlice";
+import { useLogoutMutation } from "../slices/userApiSlice";
 
 const SideNavbar = ({ home, settings, likes, bookmarks, profile }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [logoutApiCall] = useLogoutMutation();
+
+  const handleLogout = async () => {
+    try {
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <ul className={styles["navbar"]}>
       <img src="/Logo.svg" alt="logo" className={styles["navbar__logo"]} />
@@ -61,8 +79,9 @@ const SideNavbar = ({ home, settings, likes, bookmarks, profile }) => {
             />
           </svg>
         </Link>
-        <Link to="/profile" className={styles["navbar__item"]}>
-          <span className={styles["navbar__text"]}>Profile</span>
+        {/* <Link to="/profile" className={styles["navbar__item"]}> */}
+        <div className={styles["navbar__item"]} onClick={handleLogout}>
+          <span className={styles["navbar__text"]}>Logout</span>
           <svg
             width="24"
             height="24"
@@ -85,7 +104,8 @@ const SideNavbar = ({ home, settings, likes, bookmarks, profile }) => {
               strokeWidth="1.5"
             />
           </svg>
-        </Link>
+        </div>
+        {/* </Link> */}
         <Link to="/settings" className={styles["navbar__item"]}>
           <span className={styles["navbar__text"]}>Settings</span>
           <svg

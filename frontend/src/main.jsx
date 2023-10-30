@@ -25,12 +25,11 @@ const router = createBrowserRouter(
         <Route path="/login" element={<LoginScreen />} />
         <Route path="/register" element={<RegisterScreen />} />
         <Route path="/verify/:id" element={<VerifyScreen />} />
-        <Route path="/home" element={<HomeScreen />} />
       </Route>
 
-      {/* <Route path="" element={<AuthRoute />}>
-      <Route path="/home" element={<HomeScreen />} />
-      </Route> */}
+      <Route path="" element={<AuthRoute />}>
+        <Route path="/home" element={<HomeScreen />} />
+      </Route>
     </>
   )
 );
