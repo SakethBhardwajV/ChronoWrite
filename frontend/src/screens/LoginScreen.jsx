@@ -19,7 +19,7 @@ const LoginScreen = () => {
 
   useEffect(() => {
     if (userInfo) {
-      return;
+      navigate("/home");
     }
   }, [userInfo]);
 
@@ -31,6 +31,7 @@ const LoginScreen = () => {
         password,
       }).unwrap();
       dispatch(setCredentials({ ...res }));
+      navigate("/home");
     } catch (err) {
       console.error(err?.data?.message || err.error);
     }

@@ -12,9 +12,9 @@ const SideNavbar = ({ home, settings, likes, bookmarks, profile }) => {
 
   const handleLogout = async () => {
     try {
+      navigate("/");
       await logoutApiCall().unwrap();
       dispatch(logout());
-      navigate("/");
     } catch (err) {
       console.error(err);
     }
