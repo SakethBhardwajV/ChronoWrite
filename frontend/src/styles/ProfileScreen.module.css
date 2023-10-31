@@ -1,0 +1,78 @@
+.container {
+  min-height: 100vh;
+}
+
+.main {
+  margin: 0 auto;
+  width: 75%;
+  min-height: 100vh;
+  max-width: 75rem;
+  padding-top: 5rem;
+}
+
+.user-profile {
+  width: 85%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 3rem;
+  border-radius: 1rem;
+  background-color: var(--post);
+}
+
+.user-profile__img {
+  height: 14.6rem;
+  width: 14.6rem;
+  background-color: var(--primary);
+  border-radius: 0.7rem;
+  margin-bottom: 1rem;
+}
+
+.user-profile__name {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.user-profile__username {
+  font-size: 1.4rem;
+  font-weight: 200;
+  color: var(--secondary-text);
+}
+
+.user-profile__info {
+  width: 75%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  padding: 2rem 3rem;
+  margin-bottom: 4rem;
+  border-radius: 0 0 1rem 1rem;
+  background-color: var(--post);
+}
+
+.user-profile__info__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-profile__info__item__number {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.user-profile__info__item__name {
+  font-size: 1.4rem;
+  font-weight: 200;
+  color: var(--secondary-text);
+}
+
+.user-profile__btn {
+  padding: 0 5rem;
+  border-radius: 5rem;
+}
