@@ -32,6 +32,7 @@
   text-decoration: none;
   color: var(--text);
   font-weight: 200;
+  cursor: pointer;
 }
 
 .navbar__item:hover .navbar__text {

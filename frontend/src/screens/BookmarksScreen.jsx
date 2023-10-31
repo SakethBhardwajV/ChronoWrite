@@ -7,7 +7,7 @@ const BookmarksScreen = () => {
   return (
     <>
       <div className={styles["container"]}>
-        <SideNavbar home />
+        <SideNavbar bookmarks />
         <main className={styles["main"]}>
           <h1 className={styles["main__title"]}>Bookmarks</h1>
           <Post>Yo</Post>

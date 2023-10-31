@@ -25,7 +25,9 @@
 .user-profile__img {
   height: 14.6rem;
   width: 14.6rem;
-  background-color: var(--primary);
+  /* background-color: var(--primary); */
+  background-color: #fff;
+  background: linear-gradient(180deg, red 0%, transparent 100%);
   border-radius: 0.7rem;
   margin-bottom: 1rem;
 }
@@ -61,7 +63,7 @@
 }
 
 .user-profile__info__item__number {
-  font-size: 2rem;
+  font-size: 1.4rem;
   font-weight: 600;
   color: var(--text);
 }
