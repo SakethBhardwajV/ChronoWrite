@@ -10,15 +10,17 @@ import { Provider } from "react-redux";
 import store from "./store";
 import App from "./App.jsx";
 import "./globals.css";
+import AuthRoute from "./components/AuthRoute";
+import AdminRoute from "./components/AdminRoute";
 import LoginScreen from "./screens/LoginScreen.jsx";
 import RegisterScreen from "./screens/RegisterScreen";
 import VerifyScreen from "./screens/VerifyScreen";
 import LandingScreen from "./screens/LandingScreen";
 import HomeScreen from "./screens/HomeScreen";
-import AuthRoute from "./components/AuthRoute";
 import BookmarksScreen from "./screens/BookmarksScreen";
 import LikesScreen from "./screens/LikesScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import AdminDashboardScreen from "./screens/admin/AdminDashboardScreen";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,6 +37,10 @@ const router = createBrowserRouter(
         <Route path="/bookmarks" element={<BookmarksScreen />} />
         <Route path="/likes" element={<LikesScreen />} />
         <Route path="/profile" element={<ProfileScreen />} />
+      </Route>
+
+      <Route path="" element={<AdminRoute />}>
+        <Route path="/admin/dashboard" element={<AdminDashboardScreen />} />
       </Route>
     </>
   )

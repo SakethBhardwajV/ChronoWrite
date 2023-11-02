@@ -25,6 +25,7 @@ const authUser = asyncHandler(async (req, res) => {
       email: user.email,
       username: user.username,
       isVerified: user.isVerified,
+      isAdmin: user.isAdmin,
     });
   } else {
     res.status(400);
