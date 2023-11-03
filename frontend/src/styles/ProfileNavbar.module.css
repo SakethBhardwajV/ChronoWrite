@@ -1,0 +1,123 @@
+.navbar {
+  display: flex;
+  flex-direction: column;
+  width: 30rem;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  background-color: rgba(255, 255, 255, 0.01);
+  box-shadow: 2px 0px 31px 0px rgba(255, 255, 255, 0.05);
+}
+
+.navbar__logo {
+  background-color: rgba(92, 79, 157, 0.06);
+  padding: 3rem 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar__logo-img {
+  height: 4rem;
+}
+
+.navbar__logo-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  padding-left: 1rem;
+}
+
+.navbar__title {
+  color: var(--secondary-text);
+  font-size: 1.4rem;
+  padding-left: 3rem;
+  margin: 4rem 0;
+}
+
+.navbar__item {
+  color: var(--text);
+  cursor: pointer;
+  padding: 1.5rem 3rem;
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  position: relative;
+  text-decoration: none;
+  transition: all 200ms;
+}
+
+.navbar__item::before {
+  content: "";
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: var(--primary);
+}
+
+.navbar__item--active::before {
+  width: 0.3rem;
+}
+
+.navbar__item--active {
+  background-color: transparent;
+  background: linear-gradient(
+    90deg,
+    rgba(144, 75, 255, 0.2) 0%,
+    transparent 100%
+  );
+}
+
+.navbar__item--active .navbar__item__icon,
+.navbar__item--active .navbar__item__text {
+  opacity: 1;
+}
+
+.navbar__item:hover .navbar__item__icon,
+.navbar__item:hover .navbar__item__text {
+  opacity: 1;
+}
+
+.navbar__item__icon {
+  width: 2rem;
+  height: auto;
+  stroke: var(--secondary-text);
+  transition: all 300ms;
+  opacity: 0.4;
+}
+
+.navbar__item__text {
+  transition: all 300ms;
+  font-size: 1.4rem;
+  font-weight: 200;
+  opacity: 0.4;
+}
+
+.navbar__item--logout {
+  background-color: transparent;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 75, 75, 0.2) 0%,
+    transparent 100%
+  );
+}
+
+.navbar__item--logout .navbar__item__icon,
+.navbar__item--logout .navbar__item__text {
+  opacity: 1;
+}
+
+.navbar__item--logout::before {
+  content: "";
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 0.3rem;
+  height: 100%;
+  background-color: var(--danger);
+}
