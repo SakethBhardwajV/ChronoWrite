@@ -43,7 +43,12 @@ const ProfileNavbar = ({ dashboard, users }) => {
 
             <span className={styles["navbar__item__text"]}>Dashboard</span>
           </Link>
-          <Link to="/admin/users" className={styles["navbar__item"]}>
+          <Link
+            to="/admin/users"
+            className={`${styles["navbar__item"]} ${
+              users ? styles["navbar__item--active"] : ""
+            }`}
+          >
             <svg
               width="14"
               height="14"

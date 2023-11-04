@@ -21,6 +21,7 @@ import BookmarksScreen from "./screens/BookmarksScreen";
 import LikesScreen from "./screens/LikesScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import AdminDashboardScreen from "./screens/admin/AdminDashboardScreen";
+import UserListScreen from "./screens/admin/UserListScreen";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -41,6 +42,7 @@ const router = createBrowserRouter(
 
       <Route path="" element={<AdminRoute />}>
         <Route path="/admin/dashboard" element={<AdminDashboardScreen />} />
+        <Route path="/admin/users" element={<UserListScreen />} />
       </Route>
     </>
   )

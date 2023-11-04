@@ -1,0 +1,40 @@
+.container {
+  min-height: 100vh;
+}
+
+.main {
+  margin: 0 auto;
+  width: 75%;
+  min-height: 100vh;
+  max-width: 75rem;
+  padding-top: 5rem;
+}
+
+.main__title {
+  font-size: 3rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.1rem;
+  margin-bottom: 1rem;
+}
+
+.main__subtitle {
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--secondary-text);
+  margin-bottom: 2rem;
+}
+
+.main__table {
+  background-color: rgba(63, 37, 132, 0.15);
+  padding: 0 3rem;
+  margin: 0 auto;
+}
+
+.main__table__head {
+  padding: 2rem 0;
+  font-size: 1.3rem;
+  font-weight: 300;
+  text-align: start;
+  color: var(--secondary-text);
+}
