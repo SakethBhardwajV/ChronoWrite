@@ -1,13 +1,16 @@
+import { useEffect, useRef, useState } from "react";
 import styles from "../styles/HomeScreen.module.css";
 import SideNavbar from "../components/SideNavbar";
-import { useEffect, useRef, useState } from "react";
 import Post from "../components/Post";
+import { useGetFollowingUsersPostsQuery } from "../slices/postApiSlice";
 
 const HomeScreen = () => {
   const [text, setText] = useState("");
   const [charCount, setCharCount] = useState(0);
 
   const textAreaRef = useRef(null);
+
+  const { data: posts, isLoading, error } = useGetFollowingUsersPostsQuery();
 
   const handleChange = (e) => {
     setText(e.target.value);
@@ -61,8 +64,30 @@ const HomeScreen = () => {
             </form>
           </div>
 
-          <Post>yo</Post>
-          <Post>yo</Post>
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <div>{error?.data?.message || error.error}</div>
+          ) : (
+            <>
+              {posts.length === 0 ? (
+                <p className={styles["no-posts"]}>
+                  No posts are posted by the people you follow.
+                </p>
+              ) : (
+                posts.map((post) => {
+                  return (
+                    <Post
+                      key={post._id}
+                      content={post.content}
+                      details={post.user}
+                      stats={post}
+                    />
+                  );
+                })
+              )}
+            </>
+          )}
         </main>
       </div>
     </>

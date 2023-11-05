@@ -1,5 +1,7 @@
 .container {
   min-height: 100vh;
+  min-width: calc(100% - var(--admin-nav-width));
+  padding-left: var(--admin-nav-width);
 }
 
 .main {
@@ -27,8 +29,11 @@
 
 .main__table {
   background-color: rgba(63, 37, 132, 0.15);
-  padding: 0 3rem;
+  padding: 0 3rem 3rem 3rem;
   margin: 0 auto;
+  height: 50rem;
+  border-radius: 1.6rem;
+  border-collapse: collapse;
 }
 
 .main__table__head {
@@ -37,4 +42,41 @@
   font-weight: 300;
   text-align: start;
   color: var(--secondary-text);
+}
+
+.main__table__head--username {
+  width: 15rem;
+}
+
+.main__table__head--name {
+  width: 15rem;
+}
+
+.main__table__head--email {
+  width: 35rem;
+}
+
+.main__table__head--member {
+  width: 15rem;
+}
+
+.main__table__head--post {
+  width: 30rem;
+}
+
+.main__table__head--admin {
+  width: 30rem;
+}
+
+.main__table__head--delete {
+  width: 10rem;
+}
+
+.main__table__row {
+  background-color: red;
+  display: block;
+  width: 100%;
+}
+
+.main__table__data {
 }

@@ -102,6 +102,13 @@
   scale: 1.1;
 }
 
+.no-posts {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 200;
+  opacity: 0.4;
+}
+
 @media (max-width: 1200px) {
 }
 

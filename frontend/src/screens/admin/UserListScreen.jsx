@@ -12,24 +12,50 @@ const UserListScreen = () => {
           <table className={styles.main__table}>
             <thead>
               <tr>
-                <th className={styles.main__table__head}>Username</th>
-                <th className={styles.main__table__head}>Name</th>
-                <th className={styles.main__table__head}>Email</th>
-                <th className={styles.main__table__head}>Admin</th>
-                <th className={styles.main__table__head}>Posts posted</th>
-                <th className={styles.main__table__head}>Toggle Admin</th>
-                <th className={styles.main__table__head}></th>
+                <th
+                  className={`${styles["main__table__head"]} ${styles["main__table__head--username"]}`}
+                >
+                  Username
+                </th>
+                <th
+                  className={`${styles["main__table__head"]} ${styles["main__table__head--name"]}`}
+                >
+                  Name
+                </th>
+                <th
+                  className={`${styles["main__table__head"]} ${styles["main__table__head--email"]}`}
+                >
+                  Email
+                </th>
+                <th
+                  className={`${styles["main__table__head"]} ${styles["main__table__head--member"]}`}
+                >
+                  Member
+                </th>
+                <th
+                  className={`${styles["main__table__head"]} ${styles["main__table__head--post"]}`}
+                >
+                  Posts posted
+                </th>
+                <th
+                  className={`${styles["main__table__head"]} ${styles["main__table__head--admin"]}`}
+                >
+                  Toggle Admin
+                </th>
+                <th
+                  className={`${styles["main__table__head"]} ${styles["main__table__head--delete"]}`}
+                ></th>
               </tr>
             </thead>
 
             <tbody>
-              <tr>
-                <td>username</td>
-                <td>name</td>
-                <td>email@gmail.com</td>
-                <td>x</td>
-                <td>XX</td>
-                <td>
+              <tr className={styles["main__table__row"]}>
+                <td className={styles["main__table__data"]}>username</td>
+                <td className={styles["main__table__data"]}>name</td>
+                <td className={styles["main__table__data"]}>email@gmail.com</td>
+                <td className={styles["main__table__data"]}>x</td>
+                <td className={styles["main__table__data"]}>XX</td>
+                <td className={styles["main__table__data"]}>
                   <svg
                     width="12"
                     height="12"
@@ -45,7 +71,7 @@ const UserListScreen = () => {
                     />
                   </svg>
                 </td>
-                <td>
+                <td className={styles["main__table__data"]}>
                   <svg
                     width="14"
                     height="16"

@@ -19,9 +19,9 @@ const LoginScreen = () => {
 
   useEffect(() => {
     if (userInfo) {
-      navigate("/home");
+      navigate(`/home`);
     }
-  }, [userInfo]);
+  }, [userInfo, navigate]);
 
   const submitHandler = async (e) => {
     e.preventDefault();

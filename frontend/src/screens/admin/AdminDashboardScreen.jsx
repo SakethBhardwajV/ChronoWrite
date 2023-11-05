@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import styles from "../../styles/AdminDashboardScreen.module.css";
 import ProfileNavbar from "../../components/ProfileNavBar";
 
 const AdminDashboardScreen = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className={styles["container"]}>
@@ -217,7 +220,10 @@ const AdminDashboardScreen = () => {
               </div>
             </div>
             <div className={styles["main__content__footer"]}>
-              <button className={styles["main__content__footer__btn"]}>
+              <button
+                className={styles["main__content__footer__btn"]}
+                onClick={() => navigate("/home")}
+              >
                 Home
               </button>
               <button className={styles["main__content__footer__btn"]}>
