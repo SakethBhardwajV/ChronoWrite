@@ -1,8 +1,12 @@
 import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import styles from "../styles/HomeScreen.module.css";
 import SideNavbar from "../components/SideNavbar";
 import Post from "../components/Post";
-import { useGetFollowingUsersPostsQuery } from "../slices/postApiSlice";
+import {
+  useCreatePostMutation,
+  useGetFollowingUsersPostsQuery,
+} from "../slices/postApiSlice";
 
 const HomeScreen = () => {
   const [text, setText] = useState("");
@@ -10,17 +14,35 @@ const HomeScreen = () => {
 
   const textAreaRef = useRef(null);
 
+  const { userInfo } = useSelector((state) => state.auth);
+
   const { data: posts, isLoading, error } = useGetFollowingUsersPostsQuery();
+
+  const [createPost, { isLoading: loadingPostCreation }] =
+    useCreatePostMutation();
+
+  useEffect(() => {
+    textAreaRef.current.style.height = "auto";
+    textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px";
+  }, [text]);
 
   const handleChange = (e) => {
     setText(e.target.value);
     setCharCount(e.target.value.length);
   };
 
-  useEffect(() => {
-    textAreaRef.current.style.height = "auto";
-    textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px";
-  }, [text]);
+  const submitHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      await createPost({ text: text.substring(0, 200) }).unwrap();
+      setText("");
+      setCharCount(0);
+      console.log("post created");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -37,14 +59,13 @@ const HomeScreen = () => {
             </div>
             <form
               className={styles["post-input__right"]}
-              onSubmit={(e) => {
-                console.log("test");
-                e.preventDefault();
-              }}
+              onSubmit={submitHandler}
             >
               <div className={styles["post-input__text"]}>
-                <p className={styles["post-input__name"]}>Name</p>
-                <p className={styles["post-input__username"]}>@bruh</p>
+                <p className={styles["post-input__name"]}>{userInfo.name}</p>
+                <p className={styles["post-input__username"]}>
+                  @{userInfo.username}
+                </p>
               </div>
 
               <textarea
@@ -55,12 +76,18 @@ const HomeScreen = () => {
                 onChange={handleChange}
                 ref={textAreaRef}
               />
-              <span className={`${styles["post-input__counter"]} `}>
+              <span
+                className={`${styles["post-input__counter"]} ${
+                  charCount > 200 ? styles["post-input__counter--limit"] : ""
+                }`}
+              >
                 {charCount}/200
               </span>
               <button type="submit" className={styles["post-input__button"]}>
                 Post
               </button>
+
+              {loadingPostCreation && <p>Loading...</p>}
             </form>
           </div>
 

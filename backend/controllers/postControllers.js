@@ -1,6 +1,6 @@
-import asyncHandler from '../middlewares/asyncHandler.js';
-import Post from '../models/postModel.js';
-import User from '../models/userModel.js';
+import asyncHandler from "../middlewares/asyncHandler.js";
+import Post from "../models/postModel.js";
+import User from "../models/userModel.js";
 
 // @desc    Get a post by ID
 // @route   GET /api/posts/:id
@@ -12,7 +12,7 @@ const getPostByID = asyncHandler(async (req, res) => {
 
   if (!post) {
     res.status(404);
-    throw new Error('Post not found');
+    throw new Error("Post not found");
   }
 
   res.json(post);
@@ -33,11 +33,12 @@ const getUserPosts = asyncHandler(async (req, res) => {
 // @route   POST /api/posts
 // @access  Private
 const createPost = asyncHandler(async (req, res) => {
-  const { content } = req.body;
+  const { text: content } = req.body;
+  console.log(req.body);
 
   if (!content) {
     res.status(400);
-    throw new Error('Please add a post');
+    throw new Error("Please add a post");
   }
 
   const post = await Post.create({
@@ -47,7 +48,7 @@ const createPost = asyncHandler(async (req, res) => {
 
   if (!post) {
     res.status(400);
-    throw new Error('Post data is invalid');
+    throw new Error("Post data is invalid");
   }
 
   res.json(post);
@@ -63,12 +64,12 @@ const updateUserPost = asyncHandler(async (req, res) => {
 
   if (!post) {
     res.status(404);
-    throw new Error('Post not found');
+    throw new Error("Post not found");
   }
 
   if (post.user.toString() !== req.user._id.toString()) {
     res.status(401);
-    throw new Error('You cannot edit this post!');
+    throw new Error("You cannot edit this post!");
   }
 
   post.content = req.body.content || post.content;
@@ -88,17 +89,17 @@ const deleteUserPost = asyncHandler(async (req, res) => {
 
   if (!post) {
     res.status(404);
-    throw new Error('Post not found');
+    throw new Error("Post not found");
   }
 
   if (post.user.toString() !== req.user._id.toString()) {
     res.status(401);
-    throw new Error('You cannot edit this post!');
+    throw new Error("You cannot edit this post!");
   }
 
   await post.remove();
 
-  res.json({ message: 'Post removed' });
+  res.json({ message: "Post removed" });
 });
 
 // @desc    Get following user's posts
@@ -113,7 +114,7 @@ const getFollowingPosts = asyncHandler(async (req, res) => {
 
   for (let i = 0; i < followingUsers.length; i++) {
     const allPosts = await Post.find({ user: followingUsers[i] })
-      .populate('user', 'name username _id avatar isMember')
+      .populate("user", "name username _id avatar isMember")
       .sort({ createdAt: -1 });
     posts = [...posts, ...allPosts];
   }
@@ -131,19 +132,19 @@ const likePost = asyncHandler(async (req, res) => {
 
   if (!post) {
     res.status(404);
-    throw new Error('Post not found');
+    throw new Error("Post not found");
   }
 
   if (post.likedBy.includes(req.user._id)) {
     res.status(400);
-    throw new Error('Post already liked');
+    throw new Error("Post already liked");
   }
 
   post.likedBy.push(req.user._id);
 
   const updatedPost = await post.save();
 
-  res.json({ message: 'Post liked', post: updatedPost });
+  res.json({ message: "Post liked", post: updatedPost });
 });
 
 // @desc    Unlike a post
@@ -156,12 +157,12 @@ const unlikePost = asyncHandler(async (req, res) => {
 
   if (!post) {
     res.status(404);
-    throw new Error('Post not found');
+    throw new Error("Post not found");
   }
 
   if (!post.likedBy.includes(req.user._id)) {
     res.status(400);
-    throw new Error('Post has not been liked yet');
+    throw new Error("Post has not been liked yet");
   }
 
   post.likedBy = post.likedBy.filter((like) => {
@@ -170,7 +171,7 @@ const unlikePost = asyncHandler(async (req, res) => {
 
   const updatedPost = await post.save();
 
-  res.json({ message: 'Post unliked', post: updatedPost });
+  res.json({ message: "Post unliked", post: updatedPost });
 });
 
 // @desc    Add user to post's bookmarks
@@ -183,19 +184,19 @@ const addBookmarks = asyncHandler(async (req, res) => {
 
   if (!post) {
     res.status(404);
-    throw new Error('Post not found');
+    throw new Error("Post not found");
   }
 
   if (post.bookmarkedBy.includes(req.user._id)) {
     res.status(400);
-    throw new Error('Post already bookmarked');
+    throw new Error("Post already bookmarked");
   }
 
   post.bookmarkedBy.push(req.user._id);
 
   const updatedPost = await post.save();
 
-  res.json({ message: 'Post bookmarked', post: updatedPost });
+  res.json({ message: "Post bookmarked", post: updatedPost });
 });
 
 // @desc    Remove user to post's bookmarks
@@ -208,12 +209,12 @@ const removeBookmarks = asyncHandler(async (req, res) => {
 
   if (!post) {
     res.status(404);
-    throw new Error('Post not found');
+    throw new Error("Post not found");
   }
 
   if (!post.bookmarkedBy.includes(req.user._id)) {
     res.status(400);
-    throw new Error('Post has not been bookmarked yet');
+    throw new Error("Post has not been bookmarked yet");
   }
 
   post.bookmarkedBy = post.bookmarkedBy.filter((bookmark) => {
@@ -222,7 +223,7 @@ const removeBookmarks = asyncHandler(async (req, res) => {
 
   const updatedPost = await post.save();
 
-  res.json({ message: 'Post unbookmarked', post: updatedPost });
+  res.json({ message: "Post unbookmarked", post: updatedPost });
 });
 
 // @desc    Get all user bookmarks
@@ -255,19 +256,19 @@ const superLikePost = asyncHandler(async (req, res) => {
 
   if (!post) {
     res.status(404);
-    throw new Error('Post not found');
+    throw new Error("Post not found");
   }
 
   if (post.superLikedBy.includes(req.user._id)) {
     res.status(400);
-    throw new Error('Post already liked');
+    throw new Error("Post already liked");
   }
 
   post.superLikedBy.push(req.user._id);
 
   const updatedPost = await post.save();
 
-  res.json({ message: 'Post super liked', post: updatedPost });
+  res.json({ message: "Post super liked", post: updatedPost });
 });
 
 // @desc    Super Unlike a post
@@ -280,12 +281,12 @@ const superUnlikePost = asyncHandler(async (req, res) => {
 
   if (!post) {
     res.status(404);
-    throw new Error('Post not found');
+    throw new Error("Post not found");
   }
 
   if (!post.superLikedBy.includes(req.user._id)) {
     res.status(400);
-    throw new Error('Post has not been super liked yet');
+    throw new Error("Post has not been super liked yet");
   }
 
   post.superLikedBy = post.superLikedBy.filter((like) => {
@@ -294,7 +295,7 @@ const superUnlikePost = asyncHandler(async (req, res) => {
 
   const updatedPost = await post.save();
 
-  res.json({ message: 'Post super unliked', post: updatedPost });
+  res.json({ message: "Post super unliked", post: updatedPost });
 });
 
 // @desc    Update post by ID
@@ -307,12 +308,12 @@ const updatePostByID = asyncHandler(async (req, res) => {
 
   if (!post) {
     res.status(404);
-    throw new Error('Post not found');
+    throw new Error("Post not found");
   }
 
   if (post.user.toString() !== req.user._id.toString()) {
     res.status(401);
-    throw new Error('You cannot edit this post!');
+    throw new Error("You cannot edit this post!");
   }
 
   post.content = req.body.content || post.content;
@@ -332,17 +333,17 @@ const deletePostByID = asyncHandler(async (req, res) => {
 
   if (!post) {
     res.status(404);
-    throw new Error('Post not found');
+    throw new Error("Post not found");
   }
 
   if (post.user.toString() !== req.user._id.toString()) {
     res.status(401);
-    throw new Error('You cannot delete this post!');
+    throw new Error("You cannot delete this post!");
   }
 
   await post.remove();
 
-  res.json({ message: 'Post removed' });
+  res.json({ message: "Post removed" });
 });
 
 export {
