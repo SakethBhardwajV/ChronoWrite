@@ -34,7 +34,6 @@ const getUserPosts = asyncHandler(async (req, res) => {
 // @access  Private
 const createPost = asyncHandler(async (req, res) => {
   const { text: content } = req.body;
-  console.log(req.body);
 
   if (!content) {
     res.status(400);

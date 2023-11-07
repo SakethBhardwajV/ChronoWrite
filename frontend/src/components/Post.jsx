@@ -16,9 +16,13 @@ const Post = ({ content, details, stats }) => {
   const [bookmarkCount, setBookmarkCount] = useState(bookmarkedBy.length);
   const [superLiked, setSuperLiked] = useState(superLikedBy.length);
 
-  const [isLiked, setIsLiked] = useState(false);
-  const [isSuperLiked, setIsSuperLiked] = useState(false);
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isLiked, setIsLiked] = useState(likedBy.length > 0 ? true : false);
+  const [isSuperLiked, setIsSuperLiked] = useState(
+    bookmarkedBy.length > 0 ? true : false
+  );
+  const [isBookmarked, setIsBookmarked] = useState(
+    superLikedBy.length > 0 ? true : false
+  );
 
   const [likePost] = useLikePostMutation();
   const [unlikePost] = useUnlikePostMutation();
