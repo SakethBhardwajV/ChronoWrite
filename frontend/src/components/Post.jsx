@@ -18,10 +18,10 @@ const Post = ({ content, details, stats }) => {
 
   const [isLiked, setIsLiked] = useState(likedBy.length > 0 ? true : false);
   const [isSuperLiked, setIsSuperLiked] = useState(
-    bookmarkedBy.length > 0 ? true : false
+    superLikedBy.length > 0 ? true : false
   );
   const [isBookmarked, setIsBookmarked] = useState(
-    superLikedBy.length > 0 ? true : false
+    bookmarkedBy.length > 0 ? true : false
   );
 
   const [likePost] = useLikePostMutation();

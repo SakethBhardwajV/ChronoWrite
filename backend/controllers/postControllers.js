@@ -229,7 +229,9 @@ const removeBookmarks = asyncHandler(async (req, res) => {
 // @route   GET /api/posts/bookmarks
 // @access  Private
 const getAllBookmarkPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find({ bookmarkedBy: { $in: req.user._id } });
+  const posts = await Post.find({ bookmarkedBy: { $in: req.user._id } })
+    .populate("user", "name username _id avatar isMember")
+    .sort({ createdAt: -1 });
 
   res.json(posts);
 });

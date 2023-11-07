@@ -24,6 +24,13 @@ export const postApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    getUserBookmarkedPosts: builder.query({
+      query: () => ({
+        url: `${POSTS_URL}/bookmarks`,
+        method: "GET",
+      }),
+      keepUnusedDataFor: 5,
+    }),
     likePost: builder.mutation({
       query: (postID) => ({
         url: `${POSTS_URL}/like/${postID}`,
@@ -38,13 +45,13 @@ export const postApiSlice = apiSlice.injectEndpoints({
     }),
     bookmarkPost: builder.mutation({
       query: (postID) => ({
-        url: `${POSTS_URL}/bookmark/${postID}`,
+        url: `${POSTS_URL}/bookmark/add/${postID}`,
         method: "PUT",
       }),
     }),
     unbookmarkPost: builder.mutation({
       query: (postID) => ({
-        url: `${POSTS_URL}/unbookmark/${postID}`,
+        url: `${POSTS_URL}/bookmark/remove/${postID}`,
         method: "PUT",
       }),
     }),
@@ -67,6 +74,7 @@ export const {
   useCreatePostMutation,
   useGetFollowingUsersPostsQuery,
   useGetUserLikedPostsQuery,
+  useGetUserBookmarkedPostsQuery,
   useLikePostMutation,
   useUnlikePostMutation,
   useBookmarkPostMutation,

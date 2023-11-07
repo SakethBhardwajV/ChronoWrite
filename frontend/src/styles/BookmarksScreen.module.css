@@ -16,3 +16,10 @@
   text-align: center;
   color: var(--text);
 }
+
+.no-posts {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 200;
+  opacity: 0.4;
+}
