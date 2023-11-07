@@ -24,7 +24,9 @@ const getPostByID = asyncHandler(async (req, res) => {
 const getUserPosts = asyncHandler(async (req, res) => {
   const { userID } = req.params;
 
-  const posts = await Post.find({ user: userID });
+  const posts = await Post.find({ user: userID })
+    .populate("user", "name username _id avatar isMember")
+    .sort({ createdAt: -1 });
 
   res.json(posts);
 });

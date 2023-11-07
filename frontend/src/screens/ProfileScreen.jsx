@@ -1,10 +1,16 @@
-import React from "react";
+import { useSelector } from "react-redux";
 import styles from "../styles/ProfileScreen.module.css";
 import SideNavbar from "../components/SideNavbar";
 import Button from "../components/Button";
 import Post from "../components/Post";
+import Loader from "../components/Loader";
+import { useGetUserPostsQuery } from "../slices/postApiSlice";
 
 const ProfileScreen = () => {
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const { data: posts, isLoading, error } = useGetUserPostsQuery(userInfo._id);
+
   return (
     <>
       <div className={styles["container"]}>
@@ -12,8 +18,10 @@ const ProfileScreen = () => {
         <main className={styles["main"]}>
           <div className={styles["user-profile"]}>
             <div className={styles["user-profile__img"]}></div>
-            <h3 className={styles["user-profile__name"]}>User's name</h3>
-            <p className={styles["user-profile__username"]}>@username</p>
+            <h3 className={styles["user-profile__name"]}>{userInfo.name}</h3>
+            <p className={styles["user-profile__username"]}>
+              @{userInfo.username}
+            </p>
           </div>
           <div className={styles["user-profile__info"]}>
             <div className={styles["user-profile__info__item"]}>
@@ -41,10 +49,24 @@ const ProfileScreen = () => {
             </Button>
           </div>
 
-          <div className={styles["user-profile__content"]}>
-            <Post>Yo</Post>
-            <Post>Yo</Post>
-          </div>
+          {isLoading ? (
+            <Loader />
+          ) : error ? (
+            <div>Something went wrong.</div>
+          ) : posts.length === 0 ? (
+            <p className={styles["no-posts"]}>No posts.</p>
+          ) : (
+            <div className={styles["user-profile__content"]}>
+              {posts.map((post) => (
+                <Post
+                  key={post._id}
+                  content={post.content}
+                  details={post.user}
+                  stats={post}
+                />
+              ))}
+            </div>
+          )}
         </main>
       </div>
     </>
