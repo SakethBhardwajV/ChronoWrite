@@ -14,7 +14,7 @@ const Post = ({ content, details, stats }) => {
 
   const [likeCount, setLikeCount] = useState(likedBy.length);
   const [bookmarkCount, setBookmarkCount] = useState(bookmarkedBy.length);
-  const [superLiked, setSuperLiked] = useState(superLikedBy.length);
+  const [superLikedCount, setSuperLiked] = useState(superLikedBy.length);
 
   const [isLiked, setIsLiked] = useState(likedBy.length > 0 ? true : false);
   const [isSuperLiked, setIsSuperLiked] = useState(
@@ -74,7 +74,7 @@ const Post = ({ content, details, stats }) => {
   const handleSuperLike = async () => {
     try {
       await superLikePost(stats._id);
-      setSuperLiked(superLiked + 1);
+      setSuperLiked(superLikedCount + 1);
       setIsSuperLiked(!isSuperLiked);
     } catch (error) {
       console.error(error);
@@ -84,7 +84,7 @@ const Post = ({ content, details, stats }) => {
   const handleUnSuperLike = async () => {
     try {
       await unSuperLikePost(stats._id);
-      setSuperLiked(superLiked - 1);
+      setSuperLiked(superLikedCount - 1);
       setIsSuperLiked(!isSuperLiked);
     } catch (error) {
       console.error(error);
@@ -203,7 +203,9 @@ const Post = ({ content, details, stats }) => {
                 </clipPath>
               </defs>
             </svg>
-            <span className={styles["post__button__count"]}>{superLiked}</span>
+            <span className={styles["post__button__count"]}>
+              {superLikedCount}
+            </span>
           </button>
           <div className={styles["post__share-container"]}>
             <button

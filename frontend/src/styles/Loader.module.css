@@ -1,0 +1,52 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.loader {
+  display: block;
+}
+
+.loader__circle {
+  background-color: var(--primary);
+  aspect-ratio: 1/1;
+  width: 30px;
+  display: inline-block;
+  margin-inline: 5px;
+  border-radius: 50%;
+  animation-duration: 1.3s;
+  animation-timing-function: cubic-bezier(0.82, -0.02, 0.12, 1.26);
+  animation-iteration-count: infinite;
+}
+
+.a {
+  animation-name: fade-animate;
+  animation-delay: -100ms;
+}
+
+.b {
+  animation-name: fade-animate;
+  animation-delay: -200ms;
+}
+
+.c {
+  animation-name: fade-animate;
+  animation-delay: -300ms;
+}
+
+@keyframes fade-animate {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}

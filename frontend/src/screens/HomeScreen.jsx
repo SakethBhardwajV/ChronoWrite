@@ -7,6 +7,7 @@ import {
   useCreatePostMutation,
   useGetFollowingUsersPostsQuery,
 } from "../slices/postApiSlice";
+import Loader from "../components/Loader";
 
 const HomeScreen = () => {
   const [text, setText] = useState("");
@@ -87,12 +88,12 @@ const HomeScreen = () => {
                 Post
               </button>
 
-              {loadingPostCreation && <p>Loading...</p>}
+              {loadingPostCreation && <Loader />}
             </form>
           </div>
 
           {isLoading ? (
-            <p>Loading...</p>
+            <Loader />
           ) : error ? (
             <div>{error?.data?.message || error.error}</div>
           ) : (
