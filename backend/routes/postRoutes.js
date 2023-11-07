@@ -24,7 +24,7 @@ const router = express.Router();
 router.post("/", protect, createPost);
 router.get("/user/:userID", protect, getUserPosts);
 router.get("/following", protect, getFollowingPosts);
-router.get("/liked").get(protect, getAllLikedPosts);
+router.get("/liked", protect, getAllLikedPosts);
 router.put("/like/:id", protect, likePost);
 router.put("/unlike/:id", protect, unlikePost);
 router.put("/superlike/:id", protect, member, superLikePost);

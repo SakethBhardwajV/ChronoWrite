@@ -17,6 +17,13 @@ export const postApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    getUserLikedPosts: builder.query({
+      query: () => ({
+        url: `${POSTS_URL}/liked`,
+        method: "GET",
+      }),
+      keepUnusedDataFor: 5,
+    }),
     likePost: builder.mutation({
       query: (postID) => ({
         url: `${POSTS_URL}/like/${postID}`,
@@ -59,6 +66,7 @@ export const postApiSlice = apiSlice.injectEndpoints({
 export const {
   useCreatePostMutation,
   useGetFollowingUsersPostsQuery,
+  useGetUserLikedPostsQuery,
   useLikePostMutation,
   useUnlikePostMutation,
   useBookmarkPostMutation,

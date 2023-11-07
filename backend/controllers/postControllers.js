@@ -240,7 +240,9 @@ const getAllBookmarkPosts = asyncHandler(async (req, res) => {
 const getAllLikedPosts = asyncHandler(async (req, res) => {
   const posts = await Post.find({
     $or: [{ likedBy: req.user._id }, { superLikedBy: req.user._id }],
-  });
+  })
+    .populate("user", "name username _id avatar isMember")
+    .sort({ createdAt: -1 });
 
   res.json(posts);
 });
