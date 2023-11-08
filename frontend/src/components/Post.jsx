@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import styles from "../styles/Post.module.css";
 import {
   useLikePostMutation,
@@ -16,12 +17,14 @@ const Post = ({ content, details, stats }) => {
   const [bookmarkCount, setBookmarkCount] = useState(bookmarkedBy.length);
   const [superLikedCount, setSuperLiked] = useState(superLikedBy.length);
 
-  const [isLiked, setIsLiked] = useState(likedBy.length > 0 ? true : false);
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const [isLiked, setIsLiked] = useState(likedBy.includes(userInfo._id));
   const [isSuperLiked, setIsSuperLiked] = useState(
-    superLikedBy.length > 0 ? true : false
+    superLikedBy.includes(userInfo._id)
   );
   const [isBookmarked, setIsBookmarked] = useState(
-    bookmarkedBy.length > 0 ? true : false
+    bookmarkedBy.includes(userInfo._id)
   );
 
   const [likePost] = useLikePostMutation();
