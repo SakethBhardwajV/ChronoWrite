@@ -1,83 +1,162 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
 import styles from "../../styles/UserListScreen.module.css";
 import ProfileNavbar from "../../components/ProfileNavBar";
 
 const UserListScreen = () => {
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
   return (
     <>
       <div className={styles.container}>
         <ProfileNavbar users />
         <main className={styles.main}>
-          <h1 className={styles.main__title}>Users</h1>
-          <p className={styles.main__subtitle}>All registered users</p>
-          <table className={styles.main__table}>
-            <thead>
-              <tr>
-                <th
-                  className={`${styles["main__table__head"]} ${styles["main__table__head--username"]}`}
+          <h2 className={styles["main-title"]}>Users</h2>
+          <p className={styles["main-text"]}>All registered users</p>
+          <div className={styles["table-container"]}>
+            <div className={`${styles["table-header"]} ${styles["table-row"]}`}>
+              <div
+                className={`${styles["table-col"]} ${styles["table-col--username"]}`}
+              >
+                Username
+              </div>
+              <div
+                className={`${styles["table-col"]} ${styles["table-col--name"]}`}
+              >
+                Name
+              </div>
+              <div
+                className={`${styles["table-col"]} ${styles["table-col--email"]}`}
+              >
+                Email
+              </div>
+              <div
+                className={`${styles["table-col"]} ${styles["table-col--verified"]}`}
+              >
+                Verified
+              </div>
+              <div
+                className={`${styles["table-col"]} ${styles["table-col--posts"]}`}
+              >
+                Posts
+              </div>
+              <div
+                className={`${styles["table-col"]} ${styles["table-col--toggle"]}`}
+              >
+                Toggle Admin
+              </div>
+
+              <div
+                className={`${styles["table-col"]} ${styles["table-col--delete"]}`}
+              >
+                Delete user
+              </div>
+            </div>
+            <div className={`${styles["table-body"]}`}>
+              <div className={`${styles["table-item"]} ${styles["table-row"]}`}>
+                <div
+                  className={`${styles["table-col"]} ${styles["table-col--username"]}`}
                 >
-                  Username
-                </th>
-                <th
-                  className={`${styles["main__table__head"]} ${styles["main__table__head--name"]}`}
+                  <Link
+                    to="/userprofile"
+                    style={{ textDecoration: "none", color: "currentcolor" }}
+                  >
+                    Username
+                  </Link>
+                </div>
+                <div
+                  className={`${styles["table-col"]} ${styles["table-col--name"]}`}
                 >
                   Name
-                </th>
-                <th
-                  className={`${styles["main__table__head"]} ${styles["main__table__head--email"]}`}
+                </div>
+                <div
+                  className={`${styles["table-col"]} ${styles["table-col--email"]}`}
                 >
                   Email
-                </th>
-                <th
-                  className={`${styles["main__table__head"]} ${styles["main__table__head--member"]}`}
+                </div>
+                <div
+                  className={`${styles["table-col"]} ${styles["table-col--verified"]}`}
                 >
-                  Member
-                </th>
-                <th
-                  className={`${styles["main__table__head"]} ${styles["main__table__head--post"]}`}
+                  {isVerified ? (
+                    <svg
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      className={styles["table-icon"]}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11.2998 4.70022L4.70017 11.2999M4.70017 4.70022L11.2998 11.2999"
+                        stroke="white"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      className={styles["table-icon"]}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M13.3337 4L6.00033 11.3333L2.66699 8"
+                        stroke="white"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  )}
+                </div>
+                <div
+                  className={`${styles["table-col"]} ${styles["table-col--posts"]}`}
                 >
-                  Posts posted
-                </th>
-                <th
-                  className={`${styles["main__table__head"]} ${styles["main__table__head--admin"]}`}
+                  20
+                </div>
+                <div
+                  className={`${styles["table-col"]} ${styles["table-col--toggle"]}`}
                 >
-                  Toggle Admin
-                </th>
-                <th
-                  className={`${styles["main__table__head"]} ${styles["main__table__head--delete"]}`}
-                ></th>
-              </tr>
-            </thead>
+                  {isAdmin ? (
+                    <svg
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      className={styles["table-icon"]}
+                      xmlns="http://www.w3.org/2000/svg"
+                      onClick={() => setIsAdmin(!isAdmin)}
+                    >
+                      <path
+                        d="M13.3337 4L6.00033 11.3333L2.66699 8"
+                        stroke="white"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      className={styles["table-icon"]}
+                      xmlns="http://www.w3.org/2000/svg"
+                      onClick={() => setIsAdmin(!isAdmin)}
+                    >
+                      <path
+                        d="M7.99967 3.3335V12.6668M3.33301 8.00016H12.6663"
+                        stroke="white"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  )}
+                </div>
 
-            <tbody>
-              <tr className={styles["main__table__row"]}>
-                <td className={styles["main__table__data"]}>username</td>
-                <td className={styles["main__table__data"]}>name</td>
-                <td className={styles["main__table__data"]}>email@gmail.com</td>
-                <td className={styles["main__table__data"]}>x</td>
-                <td className={styles["main__table__data"]}>XX</td>
-                <td className={styles["main__table__data"]}>
+                <div
+                  className={`${styles["table-col"]} ${styles["table-col--delete"]}`}
+                >
                   <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 12 12"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6.00016 1.3335V10.6668M1.3335 6.00016H10.6668"
-                      stroke="white"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </td>
-                <td className={styles["main__table__data"]}>
-                  <svg
-                    width="14"
-                    height="16"
                     viewBox="0 0 14 16"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    className={styles["table-icon"]}
                   >
                     <path
                       d="M9.66667 4.00016V3.46683C9.66667 2.72009 9.66667 2.34672 9.52134 2.06151C9.39351 1.81063 9.18954 1.60665 8.93865 1.47882C8.65344 1.3335 8.28007 1.3335 7.53333 1.3335H6.46667C5.71993 1.3335 5.34656 1.3335 5.06135 1.47882C4.81046 1.60665 4.60649 1.81063 4.47866 2.06151C4.33333 2.34672 4.33333 2.72009 4.33333 3.46683V4.00016M5.66667 7.66683V11.0002M8.33333 7.66683V11.0002M1 4.00016H13M11.6667 4.00016V11.4668C11.6667 12.5869 11.6667 13.147 11.4487 13.5748C11.2569 13.9511 10.951 14.2571 10.5746 14.4488C10.1468 14.6668 9.58677 14.6668 8.46667 14.6668H5.53333C4.41323 14.6668 3.85318 14.6668 3.42535 14.4488C3.04903 14.2571 2.74307 13.9511 2.55132 13.5748C2.33333 13.147 2.33333 12.5869 2.33333 11.4668V4.00016"
@@ -86,14 +165,14 @@ const UserListScreen = () => {
                       strokeLinejoin="round"
                     />
                   </svg>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                </div>
+              </div>
+            </div>
+          </div>
         </main>
       </div>
     </>
   );
 };
-
+``;
 export default UserListScreen;
