@@ -22,6 +22,7 @@ import LikesScreen from "./screens/LikesScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import AdminDashboardScreen from "./screens/admin/AdminDashboardScreen";
 import UserListScreen from "./screens/admin/UserListScreen";
+import SettingsScreen from "./screens/SettingsScreen.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,7 +38,8 @@ const router = createBrowserRouter(
         <Route path="/home" element={<HomeScreen />} />
         <Route path="/bookmarks" element={<BookmarksScreen />} />
         <Route path="/likes" element={<LikesScreen />} />
-        <Route path="/profile" element={<ProfileScreen />} />
+        <Route path="/user/:id" element={<ProfileScreen />} />
+        <Route path="/settings" element={<SettingsScreen />} />
       </Route>
 
       <Route path="" element={<AdminRoute />}>

@@ -133,7 +133,7 @@ const Post = ({ content, details, stats }) => {
               {likeCount}
             </span>
           </button>
-          <button
+          {/* <button
             className={`${styles["post__button"]} ${styles["post__button--comment"]} `}
           >
             <svg
@@ -158,7 +158,7 @@ const Post = ({ content, details, stats }) => {
               </defs>
             </svg>
             <span className={styles["post__button__count"]}>3</span>
-          </button>
+          </button> */}
           <button
             className={`${styles["post__button"]} ${
               styles["post__button--bookmark"]

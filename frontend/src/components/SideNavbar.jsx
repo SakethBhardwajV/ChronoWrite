@@ -82,7 +82,11 @@ const SideNavbar = ({ home, settings, likes, bookmarks, profile }) => {
           </svg>
         </Link>
         <Link
-          to={userInfo && userInfo.isAdmin ? "/admin/dashboard" : "/profile"}
+          to={
+            userInfo && userInfo.isAdmin
+              ? "/admin/dashboard"
+              : `/user/${userInfo?.username}`
+          }
           className={styles["navbar__item"]}
         >
           <span className={styles["navbar__text"]}>Profile</span>

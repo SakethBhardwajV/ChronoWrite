@@ -18,6 +18,15 @@
   grid-template-columns: repeat(2, 1fr);
 }
 
+.image-container {
+  background-image: url("/login.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .login-container {
   background: var(--background);
   display: flex;

@@ -325,10 +325,12 @@ const getUsers = asyncHandler(async (req, res) => {
 });
 
 // @desc    Get user by ID
-// @route   GET /api/users/:id
+// @route   GET /api/users/:username
 // @access  Private
 const getUserByID = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id).select("-password");
+  const user = await User.findOne({ username: req.params.username }).select(
+    "-password"
+  );
 
   if (user) {
     res.status(200).json(user);
@@ -339,10 +341,12 @@ const getUserByID = asyncHandler(async (req, res) => {
 });
 
 // @desc    Delete user by id
-// @route   DELETE /api/users/:id
+// @route   DELETE /api/users/:username
 // @access  Private/Admin
 const deleteUserByID = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findOne({ username: req.params.username }).select(
+    "-password"
+  );
 
   if (user) {
     if (user.isAdmin) {
@@ -358,10 +362,12 @@ const deleteUserByID = asyncHandler(async (req, res) => {
 });
 
 // @desc    Update user by id
-// @route   PUT /api/users/:id
+// @route   PUT /api/users/:username
 // @access  Private/Admin
 const updateUserByID = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findOne({ username: req.params.username }).select(
+    "-password"
+  );
 
   if (user) {
     user.name = req.body.name || user.name;

@@ -32,7 +32,7 @@ router
   .put(protect, updateUserProfile)
   .delete(protect, deleteUserProfile);
 router
-  .route("/:id")
+  .route("/:username")
   .delete(protect, admin, deleteUserByID)
   .get(protect, getUserByID)
   .put(protect, admin, updateUserByID);

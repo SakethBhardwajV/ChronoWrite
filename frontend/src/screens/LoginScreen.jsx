@@ -39,7 +39,65 @@ const LoginScreen = () => {
 
   return (
     <div className={styles["parent"]}>
-      <div className={styles["image-container"]}></div>
+      <div className={styles["image-container"]}>
+        <div className={styles["logo"]}>
+          <svg
+            width="93"
+            height="111"
+            viewBox="0 0 93 111"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M35.8714 111V38.0278L92.9999 12.3333V85.3056L35.8714 111Z"
+              fill="url(#paint0_linear_1_62)"
+            />
+            <path
+              d="M0 98.6667V25.6944L57.1286 0V72.9722L0 98.6667Z"
+              fill="url(#paint1_linear_1_62)"
+            />
+            <path
+              d="M57.1286 28.467V72.9722L35.8713 82.533L35.8714 38.0278L57.1286 28.467Z"
+              fill="url(#paint2_linear_1_62)"
+            />
+            <defs>
+              <linearGradient
+                id="paint0_linear_1_62"
+                x1="93"
+                y1="27.75"
+                x2="33.2269"
+                y2="87.5536"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stopColor="#5C33D4" />
+                <stop offset="1" stopColor="#EC61FF" />
+              </linearGradient>
+              <linearGradient
+                id="paint1_linear_1_62"
+                x1="93"
+                y1="27.75"
+                x2="33.2269"
+                y2="87.5536"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stopColor="#5C33D4" />
+                <stop offset="1" stopColor="#904BFF" />
+              </linearGradient>
+              <linearGradient
+                id="paint2_linear_1_62"
+                x1="57"
+                y1="28"
+                x2="46.8192"
+                y2="89.6978"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stopColor="#904BFF" />
+                <stop offset="1" stopColor="#5C33D4" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
       <div className={styles["login-container"]}>
         <div className={styles["login-form"]}>
           <h2 className={styles["secondary-heading"]}>Login</h2>
