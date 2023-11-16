@@ -25,9 +25,10 @@ const LoginScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    const trimmedUsername = username.trim();
     try {
       const res = await login({
-        username,
+        trimmedUsername,
         password,
       }).unwrap();
       dispatch(setCredentials({ ...res }));

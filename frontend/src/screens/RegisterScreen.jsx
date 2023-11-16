@@ -22,7 +22,7 @@ const RegisterScreen = () => {
     if (userInfo) {
       navigate("/home");
     }
-  }, [userInfo]);
+  }, [userInfo, navigate]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -30,9 +30,10 @@ const RegisterScreen = () => {
       alert("Passwords do not match");
       return;
     }
+    const trimmedUsername = username.trim();
     try {
-      const res = await register({
-        username,
+      await register({
+        trimmedUsername,
         name,
         email,
         password,

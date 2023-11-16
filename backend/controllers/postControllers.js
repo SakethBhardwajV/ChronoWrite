@@ -111,6 +111,10 @@ const getFollowingPosts = asyncHandler(async (req, res) => {
 
   const followingUsers = user.following;
 
+  const myPosts = await Post.find({ user: req.user._id })
+    .populate("user", "name username _id avatar isMember")
+    .sort({ createdAt: -1 });
+
   let posts = [];
 
   for (let i = 0; i < followingUsers.length; i++) {
@@ -120,7 +124,11 @@ const getFollowingPosts = asyncHandler(async (req, res) => {
     posts = [...posts, ...allPosts];
   }
 
-  res.json(posts);
+  let allPosts = [...myPosts, ...posts].sort(
+    (a, b) => b.createdAt - a.createdAt
+  );
+
+  res.json(allPosts);
 });
 
 // @desc    Like a post

@@ -17,7 +17,12 @@ const HomeScreen = () => {
 
   const { userInfo } = useSelector((state) => state.auth);
 
-  const { data: posts, isLoading, error } = useGetFollowingUsersPostsQuery();
+  const {
+    data: posts,
+    refetch,
+    isLoading,
+    error,
+  } = useGetFollowingUsersPostsQuery();
 
   const [createPost, { isLoading: loadingPostCreation }] =
     useCreatePostMutation();
@@ -39,6 +44,7 @@ const HomeScreen = () => {
       await createPost({ text: text.substring(0, 200) }).unwrap();
       setText("");
       setCharCount(0);
+      refetch();
       console.log("post created");
     } catch (error) {
       console.error(error);
