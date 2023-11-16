@@ -2,6 +2,7 @@ import asyncHandler from "../middlewares/asyncHandler.js";
 import User from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
 import sendEmail from "../config/sendEmail.js";
+import Post from "../models/postModel.js";
 
 // @desc    Auth user & get token
 // @route   POST /api/users/login
@@ -26,6 +27,8 @@ const authUser = asyncHandler(async (req, res) => {
       username: user.username,
       isVerified: user.isVerified,
       isAdmin: user.isAdmin,
+      followers: user.followers,
+      following: user.following,
     });
   } else {
     res.status(400);
@@ -325,12 +328,10 @@ const getUsers = asyncHandler(async (req, res) => {
 });
 
 // @desc    Get user by ID
-// @route   GET /api/users/:username
-// @access  Private
+// @route   GET /api/users/:id
+// @access  Private/Admin
 const getUserByID = asyncHandler(async (req, res) => {
-  const user = await User.findOne({ username: req.params.username }).select(
-    "-password"
-  );
+  const user = await User.findById(req.params.id).select("-password");
 
   if (user) {
     res.status(200).json(user);
@@ -341,12 +342,10 @@ const getUserByID = asyncHandler(async (req, res) => {
 });
 
 // @desc    Delete user by id
-// @route   DELETE /api/users/:username
+// @route   DELETE /api/users/:id
 // @access  Private/Admin
 const deleteUserByID = asyncHandler(async (req, res) => {
-  const user = await User.findOne({ username: req.params.username }).select(
-    "-password"
-  );
+  const user = await User.findById(req.params.id).select("-password");
 
   if (user) {
     if (user.isAdmin) {
@@ -362,12 +361,10 @@ const deleteUserByID = asyncHandler(async (req, res) => {
 });
 
 // @desc    Update user by id
-// @route   PUT /api/users/:username
+// @route   PUT /api/users/:id
 // @access  Private/Admin
 const updateUserByID = asyncHandler(async (req, res) => {
-  const user = await User.findOne({ username: req.params.username }).select(
-    "-password"
-  );
+  const user = await User.findById(req.params.id).select("-password");
 
   if (user) {
     user.name = req.body.name || user.name;
@@ -390,6 +387,23 @@ const updateUserByID = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Get user and posts
+// @route   GET /api/users/user-posts/:username
+// @access  Private
+const getUserAndPosts = asyncHandler(async (req, res) => {
+  const user = await User.findOne({ username: req.params.username }).select(
+    "-password"
+  );
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  const posts = await Post.find({ user: user._id });
+
+  res.status(200).json({ user, posts });
+});
+
 export {
   authUser,
   registerUser,
@@ -405,4 +419,5 @@ export {
   getUserByID,
   deleteUserByID,
   updateUserByID,
+  getUserAndPosts,
 };

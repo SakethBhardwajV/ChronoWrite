@@ -29,10 +29,22 @@ export const userApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
-    getUser: builder.query({
+    getUserAndPosts: builder.query({
       query: (username) => ({
-        url: `${USERS_URL}/${username}`,
+        url: `${USERS_URL}/user-posts/${username}`,
         method: "GET",
+      }),
+    }),
+    followUser: builder.mutation({
+      query: (userID) => ({
+        url: `${USERS_URL}/follow/${userID}`,
+        method: "PUT",
+      }),
+    }),
+    unfollowUser: builder.mutation({
+      query: (userID) => ({
+        url: `${USERS_URL}/unfollow/${userID}`,
+        method: "PUT",
       }),
     }),
   }),
@@ -43,5 +55,7 @@ export const {
   useRegisterMutation,
   useGetVerifyQuery,
   useLogoutMutation,
-  useGetUserQuery,
+  useGetUserAndPostsQuery,
+  useFollowUserMutation,
+  useUnfollowUserMutation,
 } = userApiSlice;

@@ -26,10 +26,17 @@
   height: 14.6rem;
   width: 14.6rem;
   /* background-color: var(--primary); */
-  background-color: #fff;
-  background: linear-gradient(180deg, red 0%, transparent 100%);
-  border-radius: 0.7rem;
+  /* background-color: #fff;
+  background-image: ; */
+  border-radius: 50%;
   margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  background-size: contain;
 }
 
 .user-profile__name {

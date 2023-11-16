@@ -1,24 +1,54 @@
-import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styles from "../styles/ProfileScreen.module.css";
 import SideNavbar from "../components/SideNavbar";
 import Button from "../components/Button";
 import Post from "../components/Post";
 import Loader from "../components/Loader";
-import { useGetUserPostsQuery } from "../slices/postApiSlice";
-import { useGetUserQuery } from "../slices/userApiSlice";
+import {
+  useGetUserAndPostsQuery,
+  useFollowUserMutation,
+  useUnfollowUserMutation,
+} from "../slices/userApiSlice";
+import { removeFollowing, addFollowing } from "../slices/authSlice";
 
 const ProfileScreen = () => {
   const { id: username } = useParams();
+  const { userInfo } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
-  const { data: userInfo, isLoading, error } = useGetUserQuery(username);
-  console.log(userInfo);
+  const {
+    data: userAndPosts,
+    isLoading,
+    error,
+  } = useGetUserAndPostsQuery(username);
 
-  // const {
-  //   data: posts,
-  //   isLoading: loadingUserPosts,
-  //   error: errorUserPosts,
-  // } = useGetUserPostsQuery(userInfo._id);
+  const { user, posts } = userAndPosts || { user: {}, posts: [] };
+
+  const [isFollowing, setIsFollowing] = useState(
+    userInfo.following.includes(user._id)
+  );
+
+  const [followUser] = useFollowUserMutation();
+  const [unfollowUser] = useUnfollowUserMutation();
+
+  const followHandler = () => {
+    if (isFollowing) {
+      unfollowUser(user._id);
+      setIsFollowing(false);
+      dispatch(removeFollowing(user._id));
+    } else {
+      followUser(user._id);
+      setIsFollowing(true);
+      dispatch(addFollowing(user._id));
+    }
+  };
+
+  useEffect(() => {
+    // Update isFollowing when userInfo or user._id changes
+    setIsFollowing(userInfo.following.includes(user._id));
+  }, [userInfo, user._id]);
 
   return (
     <>
@@ -32,18 +62,22 @@ const ProfileScreen = () => {
           ) : (
             <>
               <div className={styles["user-profile"]}>
-                <div className={styles["user-profile__img"]}></div>
-                <h3 className={styles["user-profile__name"]}>
-                  {userInfo.name}
-                </h3>
+                <div className={styles["user-profile__img"]}>
+                  <img
+                    src={user.avatar}
+                    alt="profile-img"
+                    className={styles["avatar"]}
+                  />
+                </div>
+                <h3 className={styles["user-profile__name"]}>{user.name}</h3>
                 <p className={styles["user-profile__username"]}>
-                  @{userInfo.username}
+                  @{user.username}
                 </p>
               </div>
               <div className={styles["user-profile__info"]}>
                 <div className={styles["user-profile__info__item"]}>
                   <p className={styles["user-profile__info__item__number"]}>
-                    XX
+                    {user.followers.length}
                   </p>
                   <p className={styles["user-profile__info__item__name"]}>
                     followers
@@ -51,7 +85,7 @@ const ProfileScreen = () => {
                 </div>
                 <div className={styles["user-profile__info__item"]}>
                   <p className={styles["user-profile__info__item__number"]}>
-                    XX
+                    {posts?.length || "XX"}
                   </p>
                   <p className={styles["user-profile__info__item__name"]}>
                     posts
@@ -59,28 +93,32 @@ const ProfileScreen = () => {
                 </div>
                 <div className={styles["user-profile__info__item"]}>
                   <p className={styles["user-profile__info__item__number"]}>
-                    XX
+                    {user.following.length}
                   </p>
                   <p className={styles["user-profile__info__item__name"]}>
                     following
                   </p>
                 </div>
-                <Button
-                  varient="primary"
-                  type="block"
-                  className={styles["user-profile__btn"]}
-                >
-                  Follow
-                </Button>
+                {userInfo._id !== user._id && (
+                  <Button
+                    varient={isFollowing ? "tertiary" : "primary"}
+                    type="block"
+                    className={styles["user-profile__btn"]}
+                    onClick={followHandler}
+                    disabled={userInfo._id === user._id}
+                  >
+                    {isFollowing ? "Unfollow" : "Follow"}
+                  </Button>
+                )}
               </div>
             </>
           )}
 
-          {/* {isLoading ? (
+          {isLoading ? (
             <Loader />
           ) : error ? (
-            <div>Something went wrong.</div>
-          ) : posts.length === 0 ? (
+            <div>Your data is being loaded</div>
+          ) : posts.length === 0 || posts === undefined ? (
             <p className={styles["no-posts"]}>No posts.</p>
           ) : (
             <div className={styles["user-profile__content"]}>
@@ -88,12 +126,12 @@ const ProfileScreen = () => {
                 <Post
                   key={post._id}
                   content={post.content}
-                  details={post.user}
+                  details={user}
                   stats={post}
                 />
               ))}
             </div>
-          )} */}
+          )}
         </main>
       </div>
     </>

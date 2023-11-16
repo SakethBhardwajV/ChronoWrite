@@ -21,6 +21,11 @@
   scale: 0.98;
 }
 
+.btn:disabled {
+  background: #808080;
+  background-color: #808080;
+}
+
 .btn--block {
   width: auto;
   display: inline-block;

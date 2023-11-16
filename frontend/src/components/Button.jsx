@@ -8,6 +8,7 @@ const Button = ({
   style,
   className,
   type = "",
+  disabled = false,
 }) => {
   return (
     <button
@@ -25,6 +26,7 @@ const Button = ({
         } ` + className
       }
       type={type}
+      disabled={disabled}
     >
       {children}
     </button>

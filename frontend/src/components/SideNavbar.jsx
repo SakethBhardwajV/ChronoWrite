@@ -89,29 +89,84 @@ const SideNavbar = ({ home, settings, likes, bookmarks, profile }) => {
           }
           className={styles["navbar__item"]}
         >
-          <span className={styles["navbar__text"]}>Profile</span>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            className={`${styles["navbar__icon"]} ${
-              profile ? styles["navbar__icon--active"] : ""
-            }`}
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle
-              cx="4"
-              cy="4"
-              r="4"
-              transform="matrix(-1 0 0 1 16 3)"
-              strokeWidth="1.5"
-            />
-            <path
-              d="M5 16.9347C5 16.0743 5.54085 15.3068 6.35109 15.0175V15.0175C10.004 13.7128 13.996 13.7128 17.6489 15.0175V15.0175C18.4591 15.3068 19 16.0743 19 16.9347V18.2502C19 19.4376 17.9483 20.3498 16.7728 20.1818L15.8184 20.0455C13.2856 19.6837 10.7144 19.6837 8.18162 20.0455L7.22721 20.1818C6.0517 20.3498 5 19.4376 5 18.2502V16.9347Z"
-              strokeWidth="1.5"
-            />
-          </svg>
+          <span className={styles["navbar__text"]}>
+            {userInfo && userInfo.isAdmin ? "Dashboard" : "Profile"}
+          </span>
+          {userInfo && userInfo.isAdmin ? (
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              className={`${styles["navbar__icon"]} ${
+                profile ? styles["navbar__icon--active"] : ""
+              }`}
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clipPath="url(#clip0_1_1806)">
+                <rect
+                  x="2.75"
+                  y="2.75"
+                  width="7.45523"
+                  height="7.45523"
+                  rx="2.25"
+                  strokeWidth="1.5"
+                />
+                <rect
+                  x="2.75"
+                  y="13.7948"
+                  width="7.45523"
+                  height="7.45523"
+                  rx="3.72762"
+                  strokeWidth="1.5"
+                />
+                <rect
+                  x="13.7948"
+                  y="2.75"
+                  width="7.45523"
+                  height="7.45523"
+                  rx="3.72762"
+                  strokeWidth="1.5"
+                />
+                <rect
+                  x="13.7948"
+                  y="13.7948"
+                  width="7.45523"
+                  height="7.45523"
+                  rx="2.25"
+                  strokeWidth="1.5"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_1_1806">
+                  <rect width="24" height="24" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          ) : (
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              className={`${styles["navbar__icon"]} ${
+                profile ? styles["navbar__icon--active"] : ""
+              }`}
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="4"
+                cy="4"
+                r="4"
+                transform="matrix(-1 0 0 1 16 3)"
+                strokeWidth="1.5"
+              />
+              <path
+                d="M5 16.9347C5 16.0743 5.54085 15.3068 6.35109 15.0175V15.0175C10.004 13.7128 13.996 13.7128 17.6489 15.0175V15.0175C18.4591 15.3068 19 16.0743 19 16.9347V18.2502C19 19.4376 17.9483 20.3498 16.7728 20.1818L15.8184 20.0455C13.2856 19.6837 10.7144 19.6837 8.18162 20.0455L7.22721 20.1818C6.0517 20.3498 5 19.4376 5 18.2502V16.9347Z"
+                strokeWidth="1.5"
+              />
+            </svg>
+          )}
         </Link>
         <Link to="/settings" className={styles["navbar__item"]}>
           <span className={styles["navbar__text"]}>Settings</span>

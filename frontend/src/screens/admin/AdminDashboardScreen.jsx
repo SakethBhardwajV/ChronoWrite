@@ -1,9 +1,12 @@
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import styles from "../../styles/AdminDashboardScreen.module.css";
 import ProfileNavbar from "../../components/ProfileNavBar";
 
 const AdminDashboardScreen = () => {
   const navigate = useNavigate();
+
+  const { userInfo } = useSelector((state) => state.auth);
 
   return (
     <>
@@ -226,7 +229,10 @@ const AdminDashboardScreen = () => {
               >
                 Home
               </button>
-              <button className={styles["main__content__footer__btn"]}>
+              <button
+                className={styles["main__content__footer__btn"]}
+                onClick={() => navigate(`/user/${userInfo.username}`)}
+              >
                 Profile
               </button>
             </div>

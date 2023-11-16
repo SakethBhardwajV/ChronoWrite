@@ -18,9 +18,24 @@ const authSlice = createSlice({
       state.userInfo = null;
       localStorage.removeItem("userInfo");
     },
+    addFollowing: (state, action) => {
+      if (state.userInfo) {
+        state.userInfo.following.push(action.payload);
+        localStorage.setItem("userInfo", JSON.stringify(state.userInfo));
+      }
+    },
+    removeFollowing: (state, action) => {
+      if (state.userInfo) {
+        state.userInfo.following = state.userInfo.following.filter(
+          (id) => id !== action.payload
+        );
+        localStorage.setItem("userInfo", JSON.stringify(state.userInfo));
+      }
+    },
   },
 });
 
-export const { setCredentials, logout } = authSlice.actions;
+export const { setCredentials, logout, removeFollowing, addFollowing } =
+  authSlice.actions;
 
 export default authSlice.reducer;
