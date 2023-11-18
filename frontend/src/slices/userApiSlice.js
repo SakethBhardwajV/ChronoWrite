@@ -29,6 +29,12 @@ export const userApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    getSearchUsers: builder.query({
+      query: () => ({
+        url: `${USERS_URL}/search`,
+        method: "GET",
+      }),
+    }),
     getUserAndPosts: builder.query({
       query: (username) => ({
         url: `${USERS_URL}/user-posts/${username}`,
@@ -55,6 +61,7 @@ export const {
   useRegisterMutation,
   useGetVerifyQuery,
   useLogoutMutation,
+  useGetSearchUsersQuery,
   useGetUserAndPostsQuery,
   useFollowUserMutation,
   useUnfollowUserMutation,

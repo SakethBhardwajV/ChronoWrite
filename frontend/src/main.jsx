@@ -24,6 +24,7 @@ import AdminDashboardScreen from "./screens/admin/AdminDashboardScreen";
 import UserListScreen from "./screens/admin/UserListScreen";
 import SettingsScreen from "./screens/SettingsScreen.jsx";
 import PostScreen from "./screens/PostScreen.jsx";
+import SearchScreen from "./screens/SearchScreen.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -42,6 +43,7 @@ const router = createBrowserRouter(
         <Route path="/user/:id" element={<ProfileScreen />} />
         <Route path="/settings" element={<SettingsScreen />} />
         <Route path="/post/:id" element={<PostScreen />} />
+        <Route path="/search" element={<SearchScreen />} />
       </Route>
 
       <Route path="" element={<AdminRoute />}>

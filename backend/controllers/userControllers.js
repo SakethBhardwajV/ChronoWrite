@@ -328,6 +328,14 @@ const getUsers = asyncHandler(async (req, res) => {
   res.status(200).json(users);
 });
 
+// @desc    Get users for search
+// @route   GET /api/users/search
+// @access  Private
+const getSearchUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({}).select("name username avatar");
+  res.status(200).json(users);
+});
+
 // @desc    Get user by ID
 // @route   GET /api/users/:id
 // @access  Private/Admin
@@ -417,6 +425,7 @@ export {
   unFollowUser,
   makeUserMember,
   getUsers,
+  getSearchUsers,
   getUserByID,
   deleteUserByID,
   updateUserByID,

@@ -9,6 +9,7 @@ import {
   deleteUserProfile,
   makeUserMember,
   getUsers,
+  getSearchUsers,
   getUserByID,
   deleteUserByID,
   updateUserByID,
@@ -21,6 +22,7 @@ import { protect, admin } from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
 router.route("/").get(protect, admin, getUsers).post(registerUser);
+router.get("/search", protect, getSearchUsers);
 router.post("/login", authUser);
 router.get("/verified/:id", checkUserVerified);
 router.post("/logout", protect, logoutUser);
