@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styles from "../styles/Post.module.css";
 import {
   useLikePostMutation,
@@ -11,6 +12,8 @@ import {
 } from "../slices/postApiSlice";
 
 const Post = ({ content, details, stats }) => {
+  const navigate = useNavigate();
+
   const { bookmarkedBy, likedBy, superLikedBy } = stats;
 
   const [likeCount, setLikeCount] = useState(likedBy.length);
@@ -95,7 +98,10 @@ const Post = ({ content, details, stats }) => {
   };
 
   return (
-    <div className={styles["post"]}>
+    <div
+      className={styles["post"]}
+      onClick={() => navigate(`/post/${stats._id}`)}
+    >
       <div className={styles["post__left"]}>
         <img
           src="https://i.imgur.com/D915HCO.png"

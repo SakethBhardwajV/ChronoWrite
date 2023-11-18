@@ -8,7 +8,10 @@ import User from "../models/userModel.js";
 const getPostByID = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
-  const post = await Post.findById(id);
+  const post = await Post.findById(id).populate(
+    "user",
+    "name username _id avatar"
+  );
 
   if (!post) {
     res.status(404);

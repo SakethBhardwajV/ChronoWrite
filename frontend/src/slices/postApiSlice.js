@@ -10,6 +10,12 @@ export const postApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getPostById: builder.query({
+      query: (id) => ({
+        url: `${POSTS_URL}/${id}`,
+        method: "GET",
+      }),
+    }),
     getUserPosts: builder.query({
       query: (userID) => ({
         url: `${POSTS_URL}/user/${userID}`,
@@ -79,6 +85,7 @@ export const postApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useCreatePostMutation,
+  useGetPostByIdQuery,
   useGetUserPostsQuery,
   useGetFollowingUsersPostsQuery,
   useGetUserLikedPostsQuery,

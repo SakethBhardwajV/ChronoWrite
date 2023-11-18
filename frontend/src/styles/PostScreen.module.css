@@ -1,0 +1,11 @@
+.container {
+  min-height: 100vh;
+}
+
+.main {
+  margin: 0 auto;
+  width: 75%;
+  min-height: 100vh;
+  max-width: 75rem;
+  padding-top: 5rem;
+}
