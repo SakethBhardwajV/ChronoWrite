@@ -112,11 +112,7 @@ const Post = ({ content, details, stats, className, disable, deletePost }) => {
   return (
     <div className={styles["post"] + (className ? ` ${className}` : "")}>
       <div className={styles["post__left"]}>
-        <img
-          src="https://i.imgur.com/D915HCO.png"
-          alt="user"
-          className={styles["post__img"]}
-        />
+        <img src={details.avatar} alt="user" className={styles["post__img"]} />
       </div>
 
       {userInfo._id === details._id && (

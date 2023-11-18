@@ -84,6 +84,7 @@ const registerUser = asyncHandler(async (req, res) => {
     email,
     password,
     username,
+    avatar: `https://api.dicebear.com/7.x/adventurer-neutral/svg?seed=${username}`,
   });
 
   await sendEmail(
