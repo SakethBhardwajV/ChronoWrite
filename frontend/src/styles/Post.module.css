@@ -7,6 +7,7 @@
   border-radius: 1rem;
   background-color: var(--post);
   cursor: pointer;
+  position: relative;
 }
 
 .post:not(:last-child) {
@@ -23,6 +24,38 @@
 
 .post__right {
   width: 100%;
+}
+
+.post__top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.post__actions {
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.post__action {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 200ms;
+  transform: scale(0.9);
+  opacity: 0.5;
+}
+
+.post__action:hover {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.post__action--delete {
+  stroke: var(--danger);
 }
 
 .post__text {

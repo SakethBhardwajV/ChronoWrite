@@ -10,6 +10,12 @@ export const postApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getFullPostByID: builder.query({
+      query: (id) => ({
+        url: `${POSTS_URL}/full/${id}`,
+        method: "GET",
+      }),
+    }),
     getPostById: builder.query({
       query: (id) => ({
         url: `${POSTS_URL}/${id}`,
@@ -43,6 +49,12 @@ export const postApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
       keepUnusedDataFor: 5,
+    }),
+    deletePost: builder.mutation({
+      query: (postID) => ({
+        url: `${POSTS_URL}/profile/${postID}`,
+        method: "DELETE",
+      }),
     }),
     likePost: builder.mutation({
       query: (postID) => ({
@@ -85,11 +97,13 @@ export const postApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useCreatePostMutation,
+  useGetFullPostByIDQuery,
   useGetPostByIdQuery,
   useGetUserPostsQuery,
   useGetFollowingUsersPostsQuery,
   useGetUserLikedPostsQuery,
   useGetUserBookmarkedPostsQuery,
+  useDeletePostMutation,
   useLikePostMutation,
   useUnlikePostMutation,
   useBookmarkPostMutation,

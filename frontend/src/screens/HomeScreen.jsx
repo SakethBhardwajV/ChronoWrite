@@ -6,6 +6,7 @@ import Post from "../components/Post";
 import {
   useCreatePostMutation,
   useGetFollowingUsersPostsQuery,
+  useDeletePostMutation,
 } from "../slices/postApiSlice";
 import Loader from "../components/Loader";
 
@@ -46,6 +47,18 @@ const HomeScreen = () => {
       setCharCount(0);
       refetch();
       console.log("post created");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const [deletePost] = useDeletePostMutation();
+
+  const handleDelete = async (id) => {
+    try {
+      await deletePost(id);
+      refetch();
+      console.log("post deleted");
     } catch (error) {
       console.error(error);
     }
@@ -116,6 +129,7 @@ const HomeScreen = () => {
                       content={post.content}
                       details={post.user}
                       stats={post}
+                      deletePost={() => handleDelete(post._id)}
                     />
                   );
                 })

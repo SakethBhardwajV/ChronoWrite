@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  getFullPostByID,
   getPostByID,
   getUserPosts,
   createPost,
@@ -22,6 +23,7 @@ import { protect, admin, member } from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
 router.post("/", protect, createPost);
+router.get("/full/:id", protect, getFullPostByID);
 router.get("/user/:userID", protect, getUserPosts);
 router.get("/following", protect, getFollowingPosts);
 router.get("/liked", protect, getAllLikedPosts);
@@ -37,8 +39,8 @@ router
   .delete(protect, admin, deletePostByID);
 router
   .route("/profile/:id")
-  .put(protect, admin, updateUserPost)
-  .delete(protect, admin, deleteUserPost);
+  .put(protect, updateUserPost)
+  .delete(protect, deleteUserPost);
 router.route("/bookmark/add/:id").put(protect, addBookmarks);
 router.route("/bookmark/remove/:id").put(protect, removeBookmarks);
 

@@ -2,9 +2,42 @@ import asyncHandler from "../middlewares/asyncHandler.js";
 import Post from "../models/postModel.js";
 import User from "../models/userModel.js";
 
+// @desc    Get a full post by ID
+// @route   GET /api/posts/full/:id
+// @access  Private
+const getFullPostByID = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const mainPost = await Post.findById(id).populate(
+    "user",
+    "name username _id avatar"
+  );
+
+  if (!mainPost) {
+    res.status(404);
+    throw new Error("Post not found");
+  }
+
+  const parentPost = await Post.findById(mainPost.parentPost).populate(
+    "user",
+    "name username _id avatar"
+  );
+
+  const comments = await Post.find({ parentPost: id }).populate(
+    "user",
+    "name username _id avatar"
+  );
+
+  res.json({
+    mainPost,
+    parentPost,
+    comments,
+  });
+});
+
 // @desc    Get a post by ID
 // @route   GET /api/posts/:id
-// @access  Public
+// @access  Private
 const getPostByID = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
@@ -23,7 +56,7 @@ const getPostByID = asyncHandler(async (req, res) => {
 
 // @desc    Get user posts
 // @route   GET /api/posts/user/:userID
-// @access  Public
+// @access  Private
 const getUserPosts = asyncHandler(async (req, res) => {
   const { userID } = req.params;
 
@@ -98,10 +131,10 @@ const deleteUserPost = asyncHandler(async (req, res) => {
 
   if (post.user.toString() !== req.user._id.toString()) {
     res.status(401);
-    throw new Error("You cannot edit this post!");
+    throw new Error("You cannot delete this post!");
   }
 
-  await post.remove();
+  await post.deleteOne();
 
   res.json({ message: "Post removed" });
 });
@@ -127,9 +160,9 @@ const getFollowingPosts = asyncHandler(async (req, res) => {
     posts = [...posts, ...allPosts];
   }
 
-  let allPosts = [...myPosts, ...posts].sort(
-    (a, b) => b.createdAt - a.createdAt
-  );
+  let allPosts = [...myPosts, ...posts]
+    .filter((post) => !post.parentPost)
+    .sort((a, b) => b.createdAt - a.createdAt);
 
   res.json(allPosts);
 });
@@ -363,6 +396,7 @@ const deletePostByID = asyncHandler(async (req, res) => {
 });
 
 export {
+  getFullPostByID,
   getPostByID,
   getUserPosts,
   createPost,
