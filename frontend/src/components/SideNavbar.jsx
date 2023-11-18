@@ -44,7 +44,7 @@ const SideNavbar = ({ home, settings, likes, bookmarks, profile }) => {
             />
           </svg>
         </Link>
-        <Link to="/likes" className={styles["navbar__item"]}>
+        {/* <Link to="/likes" className={styles["navbar__item"]}>
           <span className={styles["navbar__text"]}>Likes</span>
           <svg
             width="24"
@@ -61,8 +61,8 @@ const SideNavbar = ({ home, settings, likes, bookmarks, profile }) => {
               strokeWidth="1.5"
             />
           </svg>
-        </Link>
-        <Link to="/bookmarks" className={styles["navbar__item"]}>
+        </Link> */}
+        {/* <Link to="/bookmarks" className={styles["navbar__item"]}>
           <span className={styles["navbar__text"]}>Bookmarks</span>
           <svg
             width="24"
@@ -80,7 +80,7 @@ const SideNavbar = ({ home, settings, likes, bookmarks, profile }) => {
               strokeWidth="1.5"
             />
           </svg>
-        </Link>
+        </Link> */}
         <Link
           to={
             userInfo && userInfo.isAdmin
