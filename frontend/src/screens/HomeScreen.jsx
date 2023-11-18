@@ -72,7 +72,7 @@ const HomeScreen = () => {
           <div className={styles["post-input"]}>
             <div className={styles["post-input__left"]}>
               <img
-                src="https://i.imgur.com/D915HCO.png"
+                src={userInfo.avatar}
                 alt="user"
                 className={styles["post-input__img"]}
               />

@@ -33,7 +33,7 @@ const RegisterScreen = () => {
     const trimmedUsername = username.trim();
     try {
       await register({
-        trimmedUsername,
+        username: trimmedUsername,
         name,
         email,
         password,

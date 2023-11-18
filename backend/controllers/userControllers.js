@@ -25,6 +25,7 @@ const authUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       username: user.username,
+      avatar: user.avatar,
       isVerified: user.isVerified,
       isAdmin: user.isAdmin,
       followers: user.followers,

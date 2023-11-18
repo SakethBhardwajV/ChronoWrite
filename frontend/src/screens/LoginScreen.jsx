@@ -28,7 +28,7 @@ const LoginScreen = () => {
     const trimmedUsername = username.trim();
     try {
       const res = await login({
-        trimmedUsername,
+        username: trimmedUsername,
         password,
       }).unwrap();
       dispatch(setCredentials({ ...res }));
