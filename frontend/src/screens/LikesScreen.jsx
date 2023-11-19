@@ -3,10 +3,42 @@ import styles from "../styles/BookmarksScreen.module.css";
 import SideNavbar from "../components/SideNavbar";
 import Post from "../components/Post";
 import Loader from "../components/Loader";
-import { useGetUserLikedPostsQuery } from "../slices/postApiSlice";
+import {
+  useGetUserLikedPostsQuery,
+  useUnlikePostMutation,
+  useUnSuperLikePostMutation,
+} from "../slices/postApiSlice";
 
 const LikesScreen = () => {
-  const { data: posts, isLoading, error } = useGetUserLikedPostsQuery();
+  const {
+    data: posts,
+    refetch,
+    isLoading,
+    error,
+  } = useGetUserLikedPostsQuery();
+
+  const [unlikePost] = useUnlikePostMutation();
+  const [unSuperLikePost] = useUnSuperLikePostMutation();
+
+  const handleUnlike = async (postId) => {
+    try {
+      await unlikePost(postId);
+      refetch();
+      console.log("post unliked");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const unSuperLike = async (postId) => {
+    try {
+      await unSuperLikePost(postId);
+      refetch();
+      console.log("post unsuperliked");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -28,6 +60,8 @@ const LikesScreen = () => {
                   content={post.content}
                   details={post.user}
                   stats={post}
+                  unlike={() => handleUnlike(post._id)}
+                  unsuperlike={() => unSuperLikePost(post._id)}
                 />
               );
             })

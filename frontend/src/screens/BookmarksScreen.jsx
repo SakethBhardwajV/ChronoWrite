@@ -2,10 +2,30 @@ import styles from "../styles/BookmarksScreen.module.css";
 import SideNavbar from "../components/SideNavbar";
 import Post from "../components/Post";
 import Loader from "../components/Loader";
-import { useGetUserBookmarkedPostsQuery } from "../slices/postApiSlice";
+import {
+  useGetUserBookmarkedPostsQuery,
+  useUnbookmarkPostMutation,
+} from "../slices/postApiSlice";
 
 const BookmarksScreen = () => {
-  const { data: posts, isLoading, error } = useGetUserBookmarkedPostsQuery();
+  const {
+    data: posts,
+    refetch,
+    isLoading,
+    error,
+  } = useGetUserBookmarkedPostsQuery();
+
+  const [unbookmarkPost] = useUnbookmarkPostMutation();
+
+  const handleUnbookmark = async (postId) => {
+    try {
+      await unbookmarkPost(postId);
+      refetch();
+      console.log("post unbookmarked");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -28,6 +48,7 @@ const BookmarksScreen = () => {
                 content={post.content}
                 details={post.user}
                 stats={post}
+                unbookmark={() => handleUnbookmark(post._id)}
               />
             ))
           )}

@@ -48,6 +48,7 @@ const PostScreen = () => {
                       content={post.content}
                       details={post.user}
                       stats={post}
+                      showActions
                     />
                   ))}
                 </>

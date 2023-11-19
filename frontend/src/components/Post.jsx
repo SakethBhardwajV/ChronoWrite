@@ -4,15 +4,22 @@ import { useNavigate } from "react-router-dom";
 import styles from "../styles/Post.module.css";
 import {
   useLikePostMutation,
-  useUnlikePostMutation,
   useBookmarkPostMutation,
-  useUnbookmarkPostMutation,
   useSuperLikePostMutation,
-  useUnSuperLikePostMutation,
-  useDeletePostMutation,
 } from "../slices/postApiSlice";
 
-const Post = ({ content, details, stats, className, disable, deletePost }) => {
+const Post = ({
+  content,
+  details,
+  stats,
+  className,
+  disable,
+  showActions,
+  deletePost,
+  unlike,
+  unbookmark,
+  unsuperlike,
+}) => {
   const navigate = useNavigate();
 
   const { bookmarkedBy, likedBy, superLikedBy } = stats;
@@ -32,13 +39,8 @@ const Post = ({ content, details, stats, className, disable, deletePost }) => {
   );
 
   const [likePost] = useLikePostMutation();
-  const [unlikePost] = useUnlikePostMutation();
   const [bookmarkPost] = useBookmarkPostMutation();
-  const [unbookmarkPost] = useUnbookmarkPostMutation();
   const [superLikePost] = useSuperLikePostMutation();
-  const [unSuperLikePost] = useUnSuperLikePostMutation();
-
-  // const [deletePost] = useDeletePostMutation();
 
   const handleLike = async () => {
     try {
@@ -52,7 +54,7 @@ const Post = ({ content, details, stats, className, disable, deletePost }) => {
 
   const handleUnlike = async () => {
     try {
-      await unlikePost(stats._id);
+      await unlike();
       setLikeCount(likeCount - 1);
       setIsLiked(!isLiked);
     } catch (error) {
@@ -72,7 +74,7 @@ const Post = ({ content, details, stats, className, disable, deletePost }) => {
 
   const handleUnbookmark = async () => {
     try {
-      await unbookmarkPost(stats._id);
+      await unbookmark();
       setBookmarkCount(bookmarkCount - 1);
       setIsBookmarked(!isBookmarked);
     } catch (error) {
@@ -92,7 +94,7 @@ const Post = ({ content, details, stats, className, disable, deletePost }) => {
 
   const handleUnSuperLike = async () => {
     try {
-      await unSuperLikePost(stats._id);
+      await unsuperlike();
       setSuperLiked(superLikedCount - 1);
       setIsSuperLiked(!isSuperLiked);
     } catch (error) {
@@ -100,22 +102,13 @@ const Post = ({ content, details, stats, className, disable, deletePost }) => {
     }
   };
 
-  // const handleDelete = async () => {
-  //   try {
-  //     await deletePost(stats._id);
-  //     console.log("post deleted");
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
   return (
     <div className={styles["post"] + (className ? ` ${className}` : "")}>
       <div className={styles["post__left"]}>
         <img src={details.avatar} alt="user" className={styles["post__img"]} />
       </div>
 
-      {userInfo._id === details._id && (
+      {showActions && userInfo._id === details._id && (
         <div className={styles["post__actions"]}>
           <button
             className={`${styles["post__action"]} ${styles["post__action--edit"]}`}
@@ -168,7 +161,6 @@ const Post = ({ content, details, stats, className, disable, deletePost }) => {
       <div
         className={styles["post__right"]}
         style={disable ? { pointerEvents: "none" } : { pointerEvents: "auto" }}
-        onClick={disable ? () => {} : () => navigate(`/post/${stats._id}`)}
       >
         <div className={styles["post__top"]}>
           <div className={styles["post__text"]}>
@@ -177,7 +169,12 @@ const Post = ({ content, details, stats, className, disable, deletePost }) => {
           </div>
         </div>
 
-        <p className={styles["post__content"]}>{content}</p>
+        <p
+          className={styles["post__content"]}
+          onClick={disable ? () => {} : () => navigate(`/post/${stats._id}`)}
+        >
+          {content}
+        </p>
 
         <div className={styles["post__btns"]}>
           <button
@@ -200,7 +197,7 @@ const Post = ({ content, details, stats, className, disable, deletePost }) => {
               {likeCount}
             </span>
           </button>
-          {/* <button
+          <button
             className={`${styles["post__button"]} ${styles["post__button--comment"]} `}
           >
             <svg
@@ -225,7 +222,7 @@ const Post = ({ content, details, stats, className, disable, deletePost }) => {
               </defs>
             </svg>
             <span className={styles["post__button__count"]}>3</span>
-          </button> */}
+          </button>
           <button
             className={`${styles["post__button"]} ${
               styles["post__button--bookmark"]

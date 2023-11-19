@@ -128,6 +128,7 @@ const ProfileScreen = () => {
                   content={post.content}
                   details={user}
                   stats={post}
+                  showActions
                 />
               ))}
             </div>
