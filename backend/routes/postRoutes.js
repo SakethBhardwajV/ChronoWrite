@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  getAllPosts,
   getFullPostByID,
   getPostByID,
   getUserPosts,
@@ -22,7 +23,7 @@ import { protect, admin, member } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/", protect, createPost);
+router.route("/").get(protect, admin, getAllPosts).post(protect, createPost);
 router.get("/full/:id", protect, getFullPostByID);
 router.get("/user/:userID", protect, getUserPosts);
 router.get("/following", protect, getFollowingPosts);

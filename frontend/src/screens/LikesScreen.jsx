@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "../styles/BookmarksScreen.module.css";
 import SideNavbar from "../components/SideNavbar";
 import Post from "../components/Post";
@@ -30,7 +29,7 @@ const LikesScreen = () => {
     }
   };
 
-  const unSuperLike = async (postId) => {
+  const handleUnSuperLike = async (postId) => {
     try {
       await unSuperLikePost(postId);
       refetch();
@@ -61,7 +60,7 @@ const LikesScreen = () => {
                   details={post.user}
                   stats={post}
                   unlike={() => handleUnlike(post._id)}
-                  unsuperlike={() => unSuperLikePost(post._id)}
+                  unsuperlike={() => handleUnSuperLike(post._id)}
                 />
               );
             })

@@ -1,7 +1,23 @@
 import { Link, useNavigate } from "react-router-dom";
 import styles from "../styles/ProfileNavbar.module.css";
+import { useLogoutMutation } from "../slices/userApiSlice";
+import { logout } from "../slices/authSlice";
+import { useDispatch } from "react-redux";
 const ProfileNavbar = ({ dashboard, users }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [logoutApiCall] = useLogoutMutation();
+
+  const handleLogout = async () => {
+    try {
+      navigate("/");
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <>
@@ -91,7 +107,12 @@ const ProfileNavbar = ({ dashboard, users }) => {
                 strokeLinejoin="round"
               />
             </svg>
-            <span className={styles["navbar__item__text"]}>Logout</span>
+            <span
+              className={styles["navbar__item__text"]}
+              onClick={handleLogout}
+            >
+              Logout
+            </span>
           </div>
         </div>
       </div>

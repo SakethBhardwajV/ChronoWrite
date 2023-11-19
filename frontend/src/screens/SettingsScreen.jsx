@@ -83,14 +83,34 @@ const SettingsScreen = () => {
                   height="24"
                   viewBox="0 0 24 24"
                   fill="none"
+                  className={`${styles["main__container__item__icon"]} ${styles["main__container__item__icon--edit"]}`}
                   xmlns="http://www.w3.org/2000/svg"
-                  className={`${styles["main__container__item__icon"]} ${styles["main__container__item__icon--likes"]}`}
                 >
-                  <path
-                    d="M3.66276 13.2135L9.82378 19.7065C11.0068 20.9532 12.9933 20.9532 14.1762 19.7065L20.3373 13.2135C22.5543 10.877 22.5543 7.08882 20.3373 4.75235C18.1203 2.41588 14.5258 2.41588 12.3088 4.75235V4.75235C12.1409 4.92925 11.8591 4.92925 11.6912 4.75235V4.75235C9.47422 2.41588 5.87976 2.41588 3.66276 4.75235C1.44576 7.08883 1.44576 10.877 3.66276 13.2135Z"
-                    strokeWidth="1.5"
-                    stroke="#FFF"
-                  />
+                  <g clipPath="url(#clip0_1_20437)">
+                    <path
+                      d="M5 16L4 20L8 19L19.5858 7.41421C20.3668 6.63316 20.3668 5.36683 19.5858 4.58579L19.4142 4.41421C18.6332 3.63316 17.3668 3.63317 16.5858 4.41421L5 16Z"
+                      strokeWidth="1.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M15 6L18 9"
+                      strokeWidth="1.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M13 20H21"
+                      strokeWidth="1.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_1_20437">
+                      <rect width="24" height="24" fill="white" />
+                    </clipPath>
+                  </defs>
                 </svg>
                 Edit Profile
               </p>

@@ -395,7 +395,17 @@ const deletePostByID = asyncHandler(async (req, res) => {
   res.json({ message: "Post removed" });
 });
 
+// @desc    Get All Posts
+// @route   GET /api/posts
+// @access  Private/Admin
+const getAllPosts = asyncHandler(async (req, res) => {
+  const posts = await Post.find();
+
+  res.json(posts);
+});
+
 export {
+  getAllPosts,
   getFullPostByID,
   getPostByID,
   getUserPosts,

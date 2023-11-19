@@ -110,7 +110,7 @@ const Post = ({
 
       {showActions && userInfo._id === details._id && (
         <div className={styles["post__actions"]}>
-          <button
+          {/* <button
             className={`${styles["post__action"]} ${styles["post__action--edit"]}`}
           >
             <svg
@@ -129,7 +129,7 @@ const Post = ({
                 fill="#FFF"
               />
             </svg>
-          </button>
+          </button> */}
           <button
             className={`${styles["post__action"]} ${styles["post__action--delete"]}`}
             onClick={deletePost}

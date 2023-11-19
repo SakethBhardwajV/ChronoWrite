@@ -49,4 +49,5 @@
 .main__container__item__icon {
   display: inline-block;
   margin-right: 1rem;
+  stroke: #fff;
 }

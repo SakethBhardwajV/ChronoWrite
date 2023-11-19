@@ -12,6 +12,7 @@ import {
   useUnfollowUserMutation,
 } from "../slices/userApiSlice";
 import { removeFollowing, addFollowing } from "../slices/authSlice";
+import { useDeletePostMutation } from "../slices/postApiSlice";
 
 const ProfileScreen = () => {
   const { id: username } = useParams();
@@ -20,6 +21,7 @@ const ProfileScreen = () => {
 
   const {
     data: userAndPosts,
+    refetch,
     isLoading,
     error,
   } = useGetUserAndPostsQuery(username);
@@ -32,6 +34,7 @@ const ProfileScreen = () => {
 
   const [followUser] = useFollowUserMutation();
   const [unfollowUser] = useUnfollowUserMutation();
+  const [deletePost] = useDeletePostMutation();
 
   const followHandler = () => {
     if (isFollowing) {
@@ -42,6 +45,16 @@ const ProfileScreen = () => {
       followUser(user._id);
       setIsFollowing(true);
       dispatch(addFollowing(user._id));
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await deletePost(id);
+      refetch();
+      console.log("post deleted");
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -129,6 +142,7 @@ const ProfileScreen = () => {
                   details={user}
                   stats={post}
                   showActions
+                  deletePost={() => handleDelete(post._id)}
                 />
               ))}
             </div>

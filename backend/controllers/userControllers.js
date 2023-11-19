@@ -304,12 +304,96 @@ const makeUserMember = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
 
-  if (user.isMember) {
-    res.status(400);
-    throw new Error("User is already a member");
-  }
+  // if (user.isMember) {
+  //   res.status(400);
+  //   throw new Error("User is already a member");
+  // }
 
   user.isMember = true;
+
+  const updatedUser = await user.save();
+
+  res.status(200).json({
+    _id: updatedUser._id,
+    name: updatedUser.name,
+    email: updatedUser.email,
+    username: updatedUser.username,
+  });
+});
+
+// @desc    Remove user as member
+// @route   PUT /api/users/unmember/:id
+// @access  Private/Admin
+const removeUserAsMember = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  // if (!user.isMember) {
+  //   res.status(400);
+  //   throw new Error("User is no longer a member");
+  // }
+
+  user.isMember = false;
+
+  const updatedUser = await user.save();
+
+  res.status(200).json({
+    _id: updatedUser._id,
+    name: updatedUser.name,
+    email: updatedUser.email,
+    username: updatedUser.username,
+  });
+});
+
+// @desc    Make user as admin
+// @route   PUT /api/users/admin/:id
+// @access  Private/Admin
+const makeUserAdmin = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  // if (!user.isMember) {
+  //   res.status(400);
+  //   throw new Error("User is no longer a member");
+  // }
+
+  user.isAdmin = true;
+
+  const updatedUser = await user.save();
+
+  res.status(200).json({
+    _id: updatedUser._id,
+    name: updatedUser.name,
+    email: updatedUser.email,
+    username: updatedUser.username,
+  });
+});
+
+// @desc    Remove user as admin
+// @route   PUT /api/users/unadmin/:id
+// @access  Private/Admin
+const removeUserAsAdmin = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  // if (!user.isMember) {
+  //   res.status(400);
+  //   throw new Error("User is no longer a member");
+  // }
+
+  user.isAdmin = false;
 
   const updatedUser = await user.save();
 
@@ -425,6 +509,9 @@ export {
   followUser,
   unFollowUser,
   makeUserMember,
+  removeUserAsMember,
+  makeUserAdmin,
+  removeUserAsAdmin,
   getUsers,
   getSearchUsers,
   getUserByID,

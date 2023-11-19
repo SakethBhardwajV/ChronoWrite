@@ -8,6 +8,7 @@ import {
   updateUserProfile,
   deleteUserProfile,
   makeUserMember,
+  removeUserAsMember,
   getUsers,
   getSearchUsers,
   getUserByID,
@@ -16,6 +17,8 @@ import {
   followUser,
   unFollowUser,
   getUserAndPosts,
+  makeUserAdmin,
+  removeUserAsAdmin,
 } from "../controllers/userControllers.js";
 import { protect, admin } from "../middlewares/authMiddleware.js";
 
@@ -29,6 +32,9 @@ router.post("/logout", protect, logoutUser);
 router.put("/follow/:user", protect, followUser);
 router.put("/unfollow/:user", protect, unFollowUser);
 router.put("/member/:id", protect, admin, makeUserMember);
+router.put("/unmember/:id", protect, admin, removeUserAsMember);
+router.put("/admin/:id", protect, admin, makeUserAdmin);
+router.put("/unadmin/:id", protect, admin, removeUserAsAdmin);
 router.get("/user-posts/:username", protect, getUserAndPosts);
 router
   .route("/profile")

@@ -2,11 +2,29 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import styles from "../../styles/AdminDashboardScreen.module.css";
 import ProfileNavbar from "../../components/ProfileNavBar";
+import { useGetAllUsersQuery } from "../../slices/userApiSlice";
+import { useGetAllPostsQuery } from "../../slices/postApiSlice";
 
 const AdminDashboardScreen = () => {
   const navigate = useNavigate();
 
   const { userInfo } = useSelector((state) => state.auth);
+
+  const { data: users } = useGetAllUsersQuery();
+  const { data: posts } = useGetAllPostsQuery();
+
+  const registeredUsers = users?.length;
+  const verifiedUsers = users?.filter((user) => user.isVerified).length;
+  const unverifiedUsers = users?.filter((user) => !user.isVerified).length;
+  const adminUsers = users?.filter((user) => user.isAdmin).length;
+
+  const postsPublished = posts?.length;
+  const likedPosts = posts?.reduce((acc, post) => {
+    return acc + post.likedBy.length;
+  }, 0);
+  const bookmarkedPosts = posts?.reduce((acc, post) => {
+    return acc + post.bookmarkedBy.length;
+  }, 0);
 
   return (
     <>
@@ -19,7 +37,7 @@ const AdminDashboardScreen = () => {
                 Dashboard
               </h1>
               <p className={styles["main__content__header__subtitle"]}>
-                Welcome back, Username
+                Welcome back, {userInfo.name}
               </p>
             </div>
             <div className={styles["main__content__body"]}>
@@ -43,7 +61,7 @@ const AdminDashboardScreen = () => {
                   Registered Users
                 </p>
                 <p className={styles["main__content__body__item__number"]}>
-                  XX
+                  {registeredUsers}
                 </p>
               </div>
               <div className={styles["main__content__body__item"]}>
@@ -66,7 +84,7 @@ const AdminDashboardScreen = () => {
                   Verified Users
                 </p>
                 <p className={styles["main__content__body__item__number"]}>
-                  XX
+                  {verifiedUsers}
                 </p>
               </div>
               <div className={styles["main__content__body__item"]}>
@@ -90,7 +108,7 @@ const AdminDashboardScreen = () => {
                   Unverified Users
                 </p>
                 <p className={styles["main__content__body__item__number"]}>
-                  XX
+                  {unverifiedUsers}
                 </p>
               </div>
               <div className={styles["main__content__body__item"]}>
@@ -114,7 +132,7 @@ const AdminDashboardScreen = () => {
                   Posts Published
                 </p>
                 <p className={styles["main__content__body__item__number"]}>
-                  XX
+                  {postsPublished}
                 </p>
               </div>
               <div className={styles["main__content__body__item"]}>
@@ -140,7 +158,7 @@ const AdminDashboardScreen = () => {
                   Likes
                 </p>
                 <p className={styles["main__content__body__item__number"]}>
-                  XX
+                  {likedPosts}
                 </p>
               </div>
               <div className={styles["main__content__body__item"]}>
@@ -164,7 +182,7 @@ const AdminDashboardScreen = () => {
                   Bookmarks
                 </p>
                 <p className={styles["main__content__body__item__number"]}>
-                  XX
+                  {bookmarkedPosts}
                 </p>
               </div>
               <div className={styles["main__content__body__item"]}>
@@ -218,7 +236,7 @@ const AdminDashboardScreen = () => {
                   Admins
                 </p>
                 <p className={styles["main__content__body__item__number"]}>
-                  XX
+                  {adminUsers}
                 </p>
               </div>
             </div>

@@ -10,6 +10,12 @@ export const postApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getAllPosts: builder.query({
+      query: () => ({
+        url: `${POSTS_URL}`,
+        method: "GET",
+      }),
+    }),
     getFullPostByID: builder.query({
       query: (id) => ({
         url: `${POSTS_URL}/full/${id}`,
@@ -97,6 +103,7 @@ export const postApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useCreatePostMutation,
+  useGetAllPostsQuery,
   useGetFullPostByIDQuery,
   useGetPostByIdQuery,
   useGetUserPostsQuery,

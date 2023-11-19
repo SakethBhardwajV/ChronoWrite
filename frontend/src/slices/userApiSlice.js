@@ -29,6 +29,12 @@ export const userApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    getAllUsers: builder.query({
+      query: () => ({
+        url: `${USERS_URL}`,
+        method: "GET",
+      }),
+    }),
     getSearchUsers: builder.query({
       query: () => ({
         url: `${USERS_URL}/search`,
@@ -53,6 +59,36 @@ export const userApiSlice = apiSlice.injectEndpoints({
         method: "PUT",
       }),
     }),
+    makeMember: builder.mutation({
+      query: (userID) => ({
+        url: `${USERS_URL}/member/${userID}`,
+        method: "PUT",
+      }),
+    }),
+    makeUnmember: builder.mutation({
+      query: (userID) => ({
+        url: `${USERS_URL}/unmember/${userID}`,
+        method: "PUT",
+      }),
+    }),
+    makeAdmin: builder.mutation({
+      query: (userID) => ({
+        url: `${USERS_URL}/admin/${userID}`,
+        method: "PUT",
+      }),
+    }),
+    removeAdmin: builder.mutation({
+      query: (userID) => ({
+        url: `${USERS_URL}/unadmin/${userID}`,
+        method: "PUT",
+      }),
+    }),
+    deleteUser: builder.mutation({
+      query: (userID) => ({
+        url: `${USERS_URL}/${userID}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -61,8 +97,14 @@ export const {
   useRegisterMutation,
   useGetVerifyQuery,
   useLogoutMutation,
+  useGetAllUsersQuery,
   useGetSearchUsersQuery,
   useGetUserAndPostsQuery,
   useFollowUserMutation,
   useUnfollowUserMutation,
+  useMakeMemberMutation,
+  useMakeUnmemberMutation,
+  useMakeAdminMutation,
+  useRemoveAdminMutation,
+  useDeleteUserMutation,
 } = userApiSlice;
