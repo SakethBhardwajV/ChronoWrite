@@ -6,6 +6,9 @@ import Post from "../components/Post";
 import {
   useCreatePostMutation,
   useGetFollowingUsersPostsQuery,
+  useUnSuperLikePostMutation,
+  useUnbookmarkPostMutation,
+  useUnlikePostMutation,
 } from "../slices/postApiSlice";
 import Loader from "../components/Loader";
 
@@ -27,6 +30,10 @@ const HomeScreen = () => {
   const [createPost, { isLoading: loadingPostCreation }] =
     useCreatePostMutation();
 
+  const [unbookmarkPost] = useUnbookmarkPostMutation();
+  const [unlikePost] = useUnlikePostMutation();
+  const [unSuperLikePost] = useUnSuperLikePostMutation();
+
   useEffect(() => {
     textAreaRef.current.style.height = "auto";
     textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px";
@@ -46,6 +53,33 @@ const HomeScreen = () => {
       setCharCount(0);
       refetch();
       console.log("post created");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleUnbookmark = async (postId) => {
+    try {
+      await unbookmarkPost(postId);
+      console.log("post unbookmarked");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleUnlike = async (postId) => {
+    try {
+      await unlikePost(postId);
+      console.log("post unliked");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleUnSuperLike = async (postId) => {
+    try {
+      await unSuperLikePost(postId);
+      console.log("post unsuperliked");
     } catch (error) {
       console.error(error);
     }
@@ -116,6 +150,9 @@ const HomeScreen = () => {
                       content={post.content}
                       details={post.user}
                       stats={post}
+                      unlike={() => handleUnlike(post._id)}
+                      unsuperlike={() => handleUnSuperLike(post._id)}
+                      unbookmark={() => handleUnbookmark(post._id)}
                     />
                   );
                 })

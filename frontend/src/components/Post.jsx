@@ -42,17 +42,20 @@ const Post = ({
   const [bookmarkPost] = useBookmarkPostMutation();
   const [superLikePost] = useSuperLikePostMutation();
 
-  const handleLike = async () => {
+  const handleLike = async (e) => {
+    e.stopPropagation();
     try {
       await likePost(stats._id);
       setLikeCount(likeCount + 1);
       setIsLiked(!isLiked);
+      console.log("post liked");
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleUnlike = async () => {
+  const handleUnlike = async (e) => {
+    e.stopPropagation();
     try {
       await unlike();
       setLikeCount(likeCount - 1);
@@ -62,17 +65,20 @@ const Post = ({
     }
   };
 
-  const handleBookmark = async () => {
+  const handleBookmark = async (e) => {
+    e.stopPropagation();
     try {
       await bookmarkPost(stats._id);
       setBookmarkCount(bookmarkCount + 1);
       setIsBookmarked(!isBookmarked);
+      console.log("post bookmarked");
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleUnbookmark = async () => {
+  const handleUnbookmark = async (e) => {
+    e.stopPropagation();
     try {
       await unbookmark();
       setBookmarkCount(bookmarkCount - 1);
@@ -82,17 +88,20 @@ const Post = ({
     }
   };
 
-  const handleSuperLike = async () => {
+  const handleSuperLike = async (e) => {
+    e.stopPropagation();
     try {
       await superLikePost(stats._id);
       setSuperLiked(superLikedCount + 1);
       setIsSuperLiked(!isSuperLiked);
+      console.log("post superliked");
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleUnSuperLike = async () => {
+  const handleUnSuperLike = async (e) => {
+    e.stopPropagation();
     try {
       await unsuperlike();
       setSuperLiked(superLikedCount - 1);
@@ -103,7 +112,10 @@ const Post = ({
   };
 
   return (
-    <div className={styles["post"] + (className ? ` ${className}` : "")}>
+    <div
+      className={styles["post"] + (className ? ` ${className}` : "")}
+      onClick={disable ? () => {} : () => navigate(`/post/${stats._id}`)}
+    >
       <div className={styles["post__left"]}>
         <img src={details.avatar} alt="user" className={styles["post__img"]} />
       </div>
@@ -169,12 +181,7 @@ const Post = ({
           </div>
         </div>
 
-        <p
-          className={styles["post__content"]}
-          onClick={disable ? () => {} : () => navigate(`/post/${stats._id}`)}
-        >
-          {content}
-        </p>
+        <p className={styles["post__content"]}>{content}</p>
 
         <div className={styles["post__btns"]}>
           <button

@@ -12,7 +12,12 @@ import {
   useUnfollowUserMutation,
 } from "../slices/userApiSlice";
 import { removeFollowing, addFollowing } from "../slices/authSlice";
-import { useDeletePostMutation } from "../slices/postApiSlice";
+import {
+  useDeletePostMutation,
+  useUnSuperLikePostMutation,
+  useUnbookmarkPostMutation,
+  useUnlikePostMutation,
+} from "../slices/postApiSlice";
 
 const ProfileScreen = () => {
   const { id: username } = useParams();
@@ -36,6 +41,10 @@ const ProfileScreen = () => {
   const [unfollowUser] = useUnfollowUserMutation();
   const [deletePost] = useDeletePostMutation();
 
+  const [unbookmarkPost] = useUnbookmarkPostMutation();
+  const [unlikePost] = useUnlikePostMutation();
+  const [unSuperLikePost] = useUnSuperLikePostMutation();
+
   const followHandler = () => {
     if (isFollowing) {
       unfollowUser(user._id);
@@ -53,6 +62,33 @@ const ProfileScreen = () => {
       await deletePost(id);
       refetch();
       console.log("post deleted");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleUnbookmark = async (postId) => {
+    try {
+      await unbookmarkPost(postId);
+      console.log("post unbookmarked");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleUnlike = async (postId) => {
+    try {
+      await unlikePost(postId);
+      console.log("post unliked");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleUnSuperLike = async (postId) => {
+    try {
+      await unSuperLikePost(postId);
+      console.log("post unsuperliked");
     } catch (error) {
       console.error(error);
     }
@@ -143,6 +179,9 @@ const ProfileScreen = () => {
                   stats={post}
                   showActions
                   deletePost={() => handleDelete(post._id)}
+                  unlike={() => handleUnlike(post._id)}
+                  unsuperlike={() => handleUnSuperLike(post._id)}
+                  unbookmark={() => handleUnbookmark(post._id)}
                 />
               ))}
             </div>

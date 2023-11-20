@@ -4,7 +4,9 @@ import Post from "../components/Post";
 import Loader from "../components/Loader";
 import {
   useGetUserBookmarkedPostsQuery,
+  useUnSuperLikePostMutation,
   useUnbookmarkPostMutation,
+  useUnlikePostMutation,
 } from "../slices/postApiSlice";
 
 const BookmarksScreen = () => {
@@ -16,12 +18,32 @@ const BookmarksScreen = () => {
   } = useGetUserBookmarkedPostsQuery();
 
   const [unbookmarkPost] = useUnbookmarkPostMutation();
+  const [unlikePost] = useUnlikePostMutation();
+  const [unSuperLikePost] = useUnSuperLikePostMutation();
 
   const handleUnbookmark = async (postId) => {
     try {
       await unbookmarkPost(postId);
       refetch();
       console.log("post unbookmarked");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleUnlike = async (postId) => {
+    try {
+      await unlikePost(postId);
+      console.log("post unliked");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleUnSuperLike = async (postId) => {
+    try {
+      await unSuperLikePost(postId);
+      console.log("post unsuperliked");
     } catch (error) {
       console.error(error);
     }
@@ -49,6 +71,8 @@ const BookmarksScreen = () => {
                 details={post.user}
                 stats={post}
                 unbookmark={() => handleUnbookmark(post._id)}
+                unlike={() => handleUnlike(post._id)}
+                unsuperlike={() => handleUnSuperLike(post._id)}
               />
             ))
           )}
