@@ -42,7 +42,7 @@ const RegisterScreen = () => {
       toast.success("User created successfully, please verify your email");
       return;
     } catch (err) {
-      console.error(err?.data?.message || err.error);
+      toast.error(err?.data?.message || err.error);
     }
   };
 
