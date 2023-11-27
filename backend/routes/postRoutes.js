@@ -8,6 +8,7 @@ import {
   updateUserPost,
   deleteUserPost,
   getFollowingPosts,
+  addComment,
   likePost,
   unlikePost,
   superLikePost,
@@ -27,6 +28,7 @@ router.route("/").get(protect, admin, getAllPosts).post(protect, createPost);
 router.get("/full/:id", protect, getFullPostByID);
 router.get("/user/:userID", protect, getUserPosts);
 router.get("/following", protect, getFollowingPosts);
+router.post("/comment", protect, addComment);
 router.get("/liked", protect, getAllLikedPosts);
 router.get("/bookmarks", protect, getAllBookmarkPosts);
 router.put("/like/:id", protect, likePost);

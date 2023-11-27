@@ -1,0 +1,101 @@
+.modal__container {
+  width: 100%;
+  height: 100vh;
+  background-color: var(--background);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+}
+
+.modal__close {
+  stroke: #fff;
+  position: absolute;
+  top: 5rem;
+  right: 8rem;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.modal__close:hover {
+  stroke: var(--danger);
+}
+
+.modal {
+  width: 80%;
+  max-width: 80rem;
+  padding: 2rem;
+}
+
+.modal__post {
+  position: relative;
+}
+
+.modal__post::after {
+  content: "";
+  position: absolute;
+  height: 2rem;
+  width: 3px;
+  top: 100%;
+  left: 5rem;
+  background-color: #fff;
+  opacity: 0.5;
+}
+
+.modal__form {
+  width: 85%;
+  margin: 0 auto;
+}
+
+.modal__input {
+  background-color: var(--post);
+  color: var(--text);
+  width: 100%;
+  font-size: 1.4rem;
+  padding: 2rem;
+  border-radius: 1rem;
+  border: none;
+  outline: none;
+  margin-bottom: 2rem;
+  resize: none;
+  font-family: inherit;
+}
+
+.modal__input::placeholder {
+  color: rgba(255, 255, 255, 0.33);
+}
+
+.modal__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal__counter {
+  font-size: 1rem;
+  color: var(--secondary-text);
+}
+
+.modal__counter--limit {
+  color: var(--danger);
+  opacity: 40%;
+}
+
+.modal__button {
+  background-color: var(--primary);
+  border: none;
+  outline: none;
+  border-radius: 1rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text);
+  padding: 1rem 2rem;
+  cursor: pointer;
+}
+
+.modal__button:disabled {
+  background: #808080;
+  background-color: #808080;
+}

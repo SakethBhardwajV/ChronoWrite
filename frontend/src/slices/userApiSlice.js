@@ -1,4 +1,4 @@
-import { USERS_URL } from "../constants.js";
+import { USERS_URL, UPLOADS_URL } from "../constants.js";
 import { apiSlice } from "./apiSlice.js";
 
 export const userApiSlice = apiSlice.injectEndpoints({
@@ -47,6 +47,20 @@ export const userApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    getUserDetails: builder.query({
+      query: () => ({
+        url: `${USERS_URL}/details`,
+        method: "GET",
+      }),
+    }),
+    updateUser: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/profile`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["Users"],
+    }),
     followUser: builder.mutation({
       query: (userID) => ({
         url: `${USERS_URL}/follow/${userID}`,
@@ -89,6 +103,26 @@ export const userApiSlice = apiSlice.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    uploadAvatar: builder.mutation({
+      query: (data) => ({
+        url: `${UPLOADS_URL}`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+    updateAvatar: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/profile/avatar`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
+    deleteAccount: builder.mutation({
+      query: () => ({
+        url: `${USERS_URL}/profile`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -100,6 +134,8 @@ export const {
   useGetAllUsersQuery,
   useGetSearchUsersQuery,
   useGetUserAndPostsQuery,
+  useGetUserDetailsQuery,
+  useUpdateUserMutation,
   useFollowUserMutation,
   useUnfollowUserMutation,
   useMakeMemberMutation,
@@ -107,4 +143,7 @@ export const {
   useMakeAdminMutation,
   useRemoveAdminMutation,
   useDeleteUserMutation,
+  useUploadAvatarMutation,
+  useUpdateAvatarMutation,
+  useDeleteAccountMutation,
 } = userApiSlice;

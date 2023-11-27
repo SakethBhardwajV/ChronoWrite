@@ -6,11 +6,13 @@ import {
   logoutUser,
   getUserProfile,
   updateUserProfile,
+  updateUserAvatar,
   deleteUserProfile,
   makeUserMember,
   removeUserAsMember,
   getUsers,
   getSearchUsers,
+  getUserDetails,
   getUserByID,
   deleteUserByID,
   updateUserByID,
@@ -26,6 +28,7 @@ const router = express.Router();
 
 router.route("/").get(protect, admin, getUsers).post(registerUser);
 router.get("/search", protect, getSearchUsers);
+router.get("/details", protect, getUserDetails);
 router.post("/login", authUser);
 router.get("/verified/:id", checkUserVerified);
 router.post("/logout", protect, logoutUser);
@@ -36,6 +39,7 @@ router.put("/unmember/:id", protect, admin, removeUserAsMember);
 router.put("/admin/:id", protect, admin, makeUserAdmin);
 router.put("/unadmin/:id", protect, admin, removeUserAsAdmin);
 router.get("/user-posts/:username", protect, getUserAndPosts);
+router.put("/profile/avatar", protect, updateUserAvatar);
 router
   .route("/profile")
   .get(protect, getUserProfile)

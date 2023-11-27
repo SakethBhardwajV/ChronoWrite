@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useGetFullPostByIDQuery } from "../slices/postApiSlice";
 import Loader from "../components/Loader";
@@ -9,7 +10,7 @@ const PostScreen = () => {
 
   const { data: post, isLoading, error } = useGetFullPostByIDQuery(postId);
 
-  console.log(post);
+  // console.log(post);
 
   return (
     <>

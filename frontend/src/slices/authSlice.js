@@ -18,6 +18,10 @@ const authSlice = createSlice({
       state.userInfo = null;
       localStorage.removeItem("userInfo");
     },
+    updateStorage: (state, action) => {
+      state.userInfo = action.payload;
+      localStorage.setItem("userInfo", JSON.stringify(action.payload));
+    },
     addFollowing: (state, action) => {
       if (state.userInfo) {
         state.userInfo.following.push(action.payload);
@@ -35,7 +39,12 @@ const authSlice = createSlice({
   },
 });
 
-export const { setCredentials, logout, removeFollowing, addFollowing } =
-  authSlice.actions;
+export const {
+  setCredentials,
+  logout,
+  updateStorage,
+  removeFollowing,
+  addFollowing,
+} = authSlice.actions;
 
 export default authSlice.reducer;

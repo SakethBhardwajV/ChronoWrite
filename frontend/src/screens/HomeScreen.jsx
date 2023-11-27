@@ -11,6 +11,7 @@ import {
   useUnlikePostMutation,
 } from "../slices/postApiSlice";
 import Loader from "../components/Loader";
+import { toast } from "react-toastify";
 
 const HomeScreen = () => {
   const [text, setText] = useState("");
@@ -52,9 +53,9 @@ const HomeScreen = () => {
       setText("");
       setCharCount(0);
       refetch();
-      console.log("post created");
+      toast.success("Post created successfully");
     } catch (error) {
-      console.error(error);
+      toast.error(error.data.message);
     }
   };
 
@@ -110,6 +111,7 @@ const HomeScreen = () => {
               </div>
 
               <textarea
+                name="post-input__input"
                 placeholder="What's happening?"
                 className={styles["post-input__input"]}
                 rows="1"

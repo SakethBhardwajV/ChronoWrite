@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 import App from "./App.jsx";
 import "./globals.css";
+import "react-toastify/dist/ReactToastify.css";
 import AuthRoute from "./components/AuthRoute";
 import AdminRoute from "./components/AdminRoute";
 import LoginScreen from "./screens/LoginScreen.jsx";
@@ -25,6 +26,7 @@ import UserListScreen from "./screens/admin/UserListScreen";
 import SettingsScreen from "./screens/SettingsScreen.jsx";
 import PostScreen from "./screens/PostScreen.jsx";
 import SearchScreen from "./screens/SearchScreen.jsx";
+import EditProfileScreen from "./screens/EditProfileScreen.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -44,6 +46,7 @@ const router = createBrowserRouter(
         <Route path="/settings" element={<SettingsScreen />} />
         <Route path="/post/:id" element={<PostScreen />} />
         <Route path="/search" element={<SearchScreen />} />
+        <Route path="/settings/profile" element={<EditProfileScreen />} />
       </Route>
 
       <Route path="" element={<AdminRoute />}>

@@ -167,6 +167,40 @@ const getFollowingPosts = asyncHandler(async (req, res) => {
   res.json(allPosts);
 });
 
+// @desc    Add a comment to post
+// @route   POST /api/posts/comment
+// @access  Private
+const addComment = asyncHandler(async (req, res) => {
+  const { postID, content } = req.body;
+
+  console.log(postID);
+
+  if (!content) {
+    res.status(400);
+    throw new Error("Please add a comment");
+  }
+
+  const post = await Post.findById(postID);
+
+  if (!post) {
+    res.status(400);
+    throw new Error("Post not found");
+  }
+
+  const newPost = await Post.create({
+    user: req.user._id,
+    content,
+    parentPost: post._id,
+  });
+
+  if (!newPost) {
+    res.status(400);
+    throw new Error("Post data is invalid");
+  }
+
+  res.status(201).json(newPost);
+});
+
 // @desc    Like a post
 // @route   PUT /api/posts/like/:id
 // @access  Private
@@ -308,6 +342,11 @@ const superLikePost = asyncHandler(async (req, res) => {
     throw new Error("Post not found");
   }
 
+  if (!req.user.isMember) {
+    res.status(400);
+    throw new Error("Only members can super like posts");
+  }
+
   if (post.superLikedBy.includes(req.user._id)) {
     res.status(400);
     throw new Error("Post already liked");
@@ -413,6 +452,7 @@ export {
   updateUserPost,
   deleteUserPost,
   getFollowingPosts,
+  addComment,
   likePost,
   unlikePost,
   superLikePost,

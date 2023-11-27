@@ -28,6 +28,7 @@ const authUser = asyncHandler(async (req, res) => {
       avatar: user.avatar,
       isVerified: user.isVerified,
       isAdmin: user.isAdmin,
+      isMember: user.isMember,
       followers: user.followers,
       following: user.following,
     });
@@ -176,11 +177,41 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
   if (user) {
     user.name = req.body.name || user.name;
-    user.email = req.body.email || user.email;
-    user.username = req.body.username || user.username;
+    const { username, password } = req.body;
 
-    if (req.body.password) {
-      user.password = req.body.password;
+    if (username) {
+      const usernameRegex = /^[_a-zA-Z0-9][a-zA-Z0-9._]{4,15}$/;
+      if (!usernameRegex.test(username)) {
+        res.status(400);
+        throw new Error(
+          "Invalid username. Make sure it is 4-15 characters long and does not start with a number or period"
+        );
+      }
+
+      const existingUser = await User.findOne({ username });
+
+      if (existingUser && existingUser._id.toString() !== user._id.toString()) {
+        res.status(400);
+        throw new Error("Username already exists");
+      }
+
+      user.username = username;
+    } else {
+      user.username = user.username;
+    }
+
+    if (password) {
+      const passwordRegex =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%\^&\*\(\)_\+\-=\[\]\{\};:'",<>.?/|])[A-Za-z\d!@#\$%\^&\*\(\)_\+\-=\[\]\{\};:'",<>.?/|]{8,}$/;
+      if (!passwordRegex.test(password)) {
+        res.status(400);
+        throw new Error(
+          "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+        );
+      }
+      user.password = password;
+    } else {
+      user.password = user.password;
     }
 
     const updatedUser = await user.save();
@@ -190,11 +221,37 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       username: updatedUser.username,
+      avatar: updatedUser.avatar,
+      isVerified: updatedUser.isVerified,
+      isAdmin: updatedUser.isAdmin,
+      isMember: updatedUser.isMember,
+      followers: updatedUser.followers,
+      following: updatedUser.following,
     });
   } else {
     res.status(404);
     throw new Error("User not found");
   }
+});
+
+// @desc    Update user avatar
+// @route   PUT /api/users/profile/avatar
+// @access  Private
+const updateUserAvatar = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  user.avatar = req.body.avatar;
+
+  const updatedUser = await user.save();
+
+  res.status(200).json({
+    avatar: updatedUser.avatar,
+  });
 });
 
 // @desc    Delete user profile
@@ -208,6 +265,7 @@ const deleteUserProfile = asyncHandler(async (req, res) => {
       res.status(400);
       throw new Error("Cannot delete admin user");
     }
+    await Post.deleteMany({ user: user._id });
     await User.deleteOne({ _id: user._id });
     res.status(200).json({ message: "User deleted successfully" });
   } else {
@@ -405,19 +463,39 @@ const removeUserAsAdmin = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Get users
-// @route   GET /api/users
-// @access  Private/Admin
-const getUsers = asyncHandler(async (req, res) => {
-  const users = await User.find({});
-  res.status(200).json(users);
-});
-
 // @desc    Get users for search
 // @route   GET /api/users/search
 // @access  Private
 const getSearchUsers = asyncHandler(async (req, res) => {
   const users = await User.find({}).select("name username avatar");
+  res.status(200).json(users);
+});
+
+// @desc    Get User Details
+// @route   GET /api/users/profile
+// @access  Private
+const getUserDetails = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id).select("-password");
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  res.status(200).json({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    username: user.username,
+    avatar: user.avatar,
+  });
+});
+
+// @desc    Get users
+// @route   GET /api/users
+// @access  Private/Admin
+const getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({});
   res.status(200).json(users);
 });
 
@@ -493,7 +571,10 @@ const getUserAndPosts = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
 
-  const posts = await Post.find({ user: user._id });
+  const posts = await Post.find({ user: user._id }).populate(
+    "user",
+    "name username _id avatar"
+  );
 
   res.status(200).json({ user, posts });
 });
@@ -505,6 +586,7 @@ export {
   logoutUser,
   getUserProfile,
   updateUserProfile,
+  updateUserAvatar,
   deleteUserProfile,
   followUser,
   unFollowUser,
@@ -514,6 +596,7 @@ export {
   removeUserAsAdmin,
   getUsers,
   getSearchUsers,
+  getUserDetails,
   getUserByID,
   deleteUserByID,
   updateUserByID,

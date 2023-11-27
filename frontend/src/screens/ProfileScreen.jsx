@@ -18,6 +18,7 @@ import {
   useUnbookmarkPostMutation,
   useUnlikePostMutation,
 } from "../slices/postApiSlice";
+import { toast } from "react-toastify";
 
 const ProfileScreen = () => {
   const { id: username } = useParams();
@@ -34,7 +35,7 @@ const ProfileScreen = () => {
   const { user, posts } = userAndPosts || { user: {}, posts: [] };
 
   const [isFollowing, setIsFollowing] = useState(
-    userInfo.following.includes(user._id)
+    userInfo?.following?.includes(user._id)
   );
 
   const [followUser] = useFollowUserMutation();
@@ -61,9 +62,9 @@ const ProfileScreen = () => {
     try {
       await deletePost(id);
       refetch();
-      console.log("post deleted");
+      toast.success("Post deleted successfully");
     } catch (error) {
-      console.error(error);
+      toast.error(error.data.message);
     }
   };
 
@@ -96,7 +97,7 @@ const ProfileScreen = () => {
 
   useEffect(() => {
     // Update isFollowing when userInfo or user._id changes
-    setIsFollowing(userInfo.following.includes(user._id));
+    setIsFollowing(userInfo?.following?.includes(user._id));
   }, [userInfo, user._id]);
 
   return (
@@ -175,7 +176,7 @@ const ProfileScreen = () => {
                 <Post
                   key={post._id}
                   content={post.content}
-                  details={user}
+                  details={post.user}
                   stats={post}
                   showActions
                   deletePost={() => handleDelete(post._id)}

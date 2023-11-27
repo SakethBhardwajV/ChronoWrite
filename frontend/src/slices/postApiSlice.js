@@ -21,6 +21,7 @@ export const postApiSlice = apiSlice.injectEndpoints({
         url: `${POSTS_URL}/full/${id}`,
         method: "GET",
       }),
+      providesTags: ["Posts"],
     }),
     getPostById: builder.query({
       query: (id) => ({
@@ -60,6 +61,13 @@ export const postApiSlice = apiSlice.injectEndpoints({
       query: (postID) => ({
         url: `${POSTS_URL}/profile/${postID}`,
         method: "DELETE",
+      }),
+    }),
+    addComment: builder.mutation({
+      query: (data) => ({
+        url: `${POSTS_URL}/comment`,
+        method: "POST",
+        body: data,
       }),
     }),
     likePost: builder.mutation({
@@ -108,6 +116,7 @@ export const {
   useGetPostByIdQuery,
   useGetUserPostsQuery,
   useGetFollowingUsersPostsQuery,
+  useAddCommentMutation,
   useGetUserLikedPostsQuery,
   useGetUserBookmarkedPostsQuery,
   useDeletePostMutation,

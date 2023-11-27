@@ -5,6 +5,7 @@ import Button from "../components/Button";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../slices/userApiSlice";
+import { toast } from "react-toastify";
 const RegisterScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,7 +39,7 @@ const RegisterScreen = () => {
         email,
         password,
       }).unwrap();
-      // navigate("/home");
+      toast.success("User created successfully, please verify your email");
       return;
     } catch (err) {
       console.error(err?.data?.message || err.error);

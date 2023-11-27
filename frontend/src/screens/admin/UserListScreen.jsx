@@ -11,6 +11,7 @@ import {
   useRemoveAdminMutation,
   useDeleteUserMutation,
 } from "../../slices/userApiSlice";
+import { toast } from "react-toastify";
 
 const UserListScreen = () => {
   // const [isAdmin, setIsAdmin] = useState(false);
@@ -27,9 +28,9 @@ const UserListScreen = () => {
     try {
       await makeMember(id);
       refetch();
-      console.log("Member created successfully");
+      toast.success("Member created successfully");
     } catch (error) {
-      console.error(error);
+      toast.error(error.data.message);
     }
   };
 
@@ -37,9 +38,9 @@ const UserListScreen = () => {
     try {
       await makeUnmember(id);
       refetch();
-      console.log("Member removed successfully");
+      toast.success("Member removed successfully");
     } catch (error) {
-      console.error(error);
+      toast.error(error.data.message);
     }
   };
 
@@ -47,9 +48,9 @@ const UserListScreen = () => {
     try {
       await makeAdmin(id);
       refetch();
-      console.log("Admin created successfully");
+      toast.success("Admin created successfully");
     } catch (error) {
-      console.error(error);
+      toast.error(error.data.message);
     }
   };
 
@@ -57,9 +58,9 @@ const UserListScreen = () => {
     try {
       await removeAdmin(id);
       refetch();
-      console.log("Admin removed successfully");
+      toast.success("Admin removed successfully");
     } catch (error) {
-      console.error(error);
+      toast.error(error.data.message);
     }
   };
 
@@ -67,9 +68,9 @@ const UserListScreen = () => {
     try {
       await deleteUser(id);
       refetch();
-      console.log("User deleted successfully");
+      toast.success("User deleted successfully");
     } catch (error) {
-      console.error(error);
+      toast.error(error.data.message);
     }
   };
 

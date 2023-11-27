@@ -7,6 +7,7 @@ import {
   useBookmarkPostMutation,
   useSuperLikePostMutation,
 } from "../slices/postApiSlice";
+import CommentModal from "./CommentModal";
 
 const Post = ({
   content,
@@ -21,12 +22,10 @@ const Post = ({
   unsuperlike,
 }) => {
   const navigate = useNavigate();
-
   const { bookmarkedBy, likedBy, superLikedBy } = stats;
 
-  const [likeCount, setLikeCount] = useState(likedBy.length);
-  const [bookmarkCount, setBookmarkCount] = useState(bookmarkedBy.length);
-  const [superLikedCount, setSuperLiked] = useState(superLikedBy.length);
+  const [showModal, setShowModal] = useState(false);
+  const closeModal = () => setShowModal(false);
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -37,6 +36,10 @@ const Post = ({
   const [isBookmarked, setIsBookmarked] = useState(
     bookmarkedBy.includes(userInfo._id)
   );
+
+  const [likeCount, setLikeCount] = useState(likedBy.length);
+  const [bookmarkCount, setBookmarkCount] = useState(bookmarkedBy.length);
+  const [superLikedCount, setSuperLiked] = useState(superLikedBy.length);
 
   const [likePost] = useLikePostMutation();
   const [bookmarkPost] = useBookmarkPostMutation();
@@ -111,18 +114,39 @@ const Post = ({
     }
   };
 
-  return (
-    <div
-      className={styles["post"] + (className ? ` ${className}` : "")}
-      onClick={disable ? () => {} : () => navigate(`/post/${stats._id}`)}
-    >
-      <div className={styles["post__left"]}>
-        <img src={details.avatar} alt="user" className={styles["post__img"]} />
-      </div>
+  const handleDelete = async (e) => {
+    e.stopPropagation();
+    try {
+      await deletePost();
+      console.log("post deleted");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-      {showActions && userInfo._id === details._id && (
-        <div className={styles["post__actions"]}>
-          {/* <button
+  const handleCommentModal = (e) => {
+    e.stopPropagation();
+    setShowModal(true);
+  };
+
+  return (
+    <>
+      {showModal && <CommentModal post={stats} close={closeModal} />}
+      <div
+        className={styles["post"] + (className ? ` ${className}` : "")}
+        onClick={disable ? () => {} : () => navigate(`/post/${stats._id}`)}
+      >
+        <div className={styles["post__left"]}>
+          <img
+            src={details.avatar}
+            alt="user"
+            className={styles["post__img"]}
+          />
+        </div>
+
+        {showActions && userInfo._id === details._id && (
+          <div className={styles["post__actions"]}>
+            {/* <button
             className={`${styles["post__action"]} ${styles["post__action--edit"]}`}
           >
             <svg
@@ -142,148 +166,73 @@ const Post = ({
               />
             </svg>
           </button> */}
-          <button
-            className={`${styles["post__action"]} ${styles["post__action--delete"]}`}
-            onClick={deletePost}
-          >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M10 15L10 12" strokeWidth="2" strokeLinecap="round" />
-              <path d="M14 15L14 12" strokeWidth="2" strokeLinecap="round" />
-              <path
-                d="M3 7H21V7C20.0681 7 19.6022 7 19.2346 7.15224C18.7446 7.35523 18.3552 7.74458 18.1522 8.23463C18 8.60218 18 9.06812 18 10V16C18 17.8856 18 18.8284 17.4142 19.4142C16.8284 20 15.8856 20 14 20H10C8.11438 20 7.17157 20 6.58579 19.4142C6 18.8284 6 17.8856 6 16V10C6 9.06812 6 8.60218 5.84776 8.23463C5.64477 7.74458 5.25542 7.35523 4.76537 7.15224C4.39782 7 3.93188 7 3 7V7Z"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-              <path
-                d="M10.0681 3.37059C10.1821 3.26427 10.4332 3.17033 10.7825 3.10332C11.1318 3.03632 11.5597 3 12 3C12.4403 3 12.8682 3.03632 13.2175 3.10332C13.5668 3.17033 13.8179 3.26427 13.9319 3.37059"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          </button>
-        </div>
-      )}
-
-      <div
-        className={styles["post__right"]}
-        style={disable ? { pointerEvents: "none" } : { pointerEvents: "auto" }}
-      >
-        <div className={styles["post__top"]}>
-          <div className={styles["post__text"]}>
-            <p className={styles["post__name"]}>{details.name}</p>
-            <p className={styles["post__username"]}>@{details.username}</p>
-          </div>
-        </div>
-
-        <p className={styles["post__content"]}>{content}</p>
-
-        <div className={styles["post__btns"]}>
-          <button
-            className={`${styles["post__button"]} ${
-              styles["post__button--like"]
-            } ${isLiked ? styles["post__button--active"] : ""}`}
-            onClick={!isLiked ? handleLike : handleUnlike}
-          >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className={`${styles["post__button__icon"]} ${styles["post__button__icon--like"]}`}
-            >
-              <path d="M3.66276 13.2135L9.82378 19.7065C11.0068 20.9532 12.9933 20.9532 14.1762 19.7065L20.3373 13.2135C22.5543 10.877 22.5543 7.08882 20.3373 4.75235C18.1203 2.41588 14.5258 2.41588 12.3088 4.75235V4.75235C12.1409 4.92925 11.8591 4.92925 11.6912 4.75235V4.75235C9.47422 2.41588 5.87976 2.41588 3.66276 4.75235C1.44576 7.08883 1.44576 10.877 3.66276 13.2135Z" />
-            </svg>
-            <span className={`${styles["post__button__count"]}`}>
-              {likeCount}
-            </span>
-          </button>
-          <button
-            className={`${styles["post__button"]} ${styles["post__button--comment"]} `}
-          >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className={styles["post__button__icon"]}
-            >
-              <g clipPath="url(#clip0_1_19708)">
-                <path
-                  d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 13.4876 3.36093 14.891 4 16.1272L3 21L7.8728 20C9.10904 20.6391 10.5124 21 12 21Z"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_1_19708">
-                  <rect width="24" height="24" fill="white" />
-                </clipPath>
-              </defs>
-            </svg>
-            <span className={styles["post__button__count"]}>3</span>
-          </button>
-          <button
-            className={`${styles["post__button"]} ${
-              styles["post__button--bookmark"]
-            }  ${isBookmarked ? styles["post__button--active"] : ""}`}
-            onClick={!isBookmarked ? handleBookmark : handleUnbookmark}
-          >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-              className={`${styles["post__button__icon"]} ${styles["post__button__icon--bookmark"]}`}
-            >
-              <path d="M5 7C5 4.79086 6.79086 3 9 3H15C17.2091 3 19 4.79086 19 7V20.1683C19 20.9595 18.1248 21.4373 17.4592 21.0095L13.0815 18.1953C12.4227 17.7717 11.5773 17.7717 10.9185 18.1953L6.54076 21.0095C5.87525 21.4373 5 20.9595 5 20.1683V7Z" />
-            </svg>
-            <span className={styles["post__button__count"]}>
-              {bookmarkCount}
-            </span>
-          </button>
-          <button
-            className={`${styles["post__button"]} ${
-              styles["post__button--superlike"]
-            } ${isSuperLiked ? styles["post__button--active"] : ""}`}
-            onClick={!isSuperLiked ? handleSuperLike : handleUnSuperLike}
-          >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className={`${styles["post__button__icon"]} ${styles["post__button__icon--superlike"]}`}
-            >
-              <g clipPath="url(#clip0_1_20462)">
-                <path
-                  d="M12 2L15.1035 8.72839L22.4616 9.60081L17.0216 14.6316L18.4656 21.8992L12 18.28L5.53437 21.8992L6.97843 14.6316L1.53839 9.60081L8.89651 8.72839L12 2Z"
-                  strokeLinejoin="round"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_1_20462">
-                  <rect width="24" height="24" fill="white" />
-                </clipPath>
-              </defs>
-            </svg>
-            <span className={styles["post__button__count"]}>
-              {superLikedCount}
-            </span>
-          </button>
-          <div className={styles["post__share-container"]}>
             <button
-              className={`${styles["post__button"]} ${styles["post__button--share"]}`}
+              className={`${styles["post__action"]} ${styles["post__action--delete"]}`}
+              onClick={handleDelete}
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M10 15L10 12" strokeWidth="2" strokeLinecap="round" />
+                <path d="M14 15L14 12" strokeWidth="2" strokeLinecap="round" />
+                <path
+                  d="M3 7H21V7C20.0681 7 19.6022 7 19.2346 7.15224C18.7446 7.35523 18.3552 7.74458 18.1522 8.23463C18 8.60218 18 9.06812 18 10V16C18 17.8856 18 18.8284 17.4142 19.4142C16.8284 20 15.8856 20 14 20H10C8.11438 20 7.17157 20 6.58579 19.4142C6 18.8284 6 17.8856 6 16V10C6 9.06812 6 8.60218 5.84776 8.23463C5.64477 7.74458 5.25542 7.35523 4.76537 7.15224C4.39782 7 3.93188 7 3 7V7Z"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M10.0681 3.37059C10.1821 3.26427 10.4332 3.17033 10.7825 3.10332C11.1318 3.03632 11.5597 3 12 3C12.4403 3 12.8682 3.03632 13.2175 3.10332C13.5668 3.17033 13.8179 3.26427 13.9319 3.37059"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+          </div>
+        )}
+
+        <div
+          className={styles["post__right"]}
+          style={
+            disable ? { pointerEvents: "none" } : { pointerEvents: "auto" }
+          }
+        >
+          <div className={styles["post__top"]}>
+            <div className={styles["post__text"]}>
+              <p className={styles["post__name"]}>{details.name}</p>
+              <p className={styles["post__username"]}>@{details.username}</p>
+            </div>
+          </div>
+
+          <p className={styles["post__content"]}>{content}</p>
+
+          <div className={styles["post__btns"]}>
+            <button
+              className={`${styles["post__button"]} ${
+                styles["post__button--like"]
+              } ${isLiked ? styles["post__button--active"] : ""}`}
+              onClick={!isLiked ? handleLike : handleUnlike}
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className={`${styles["post__button__icon"]} ${styles["post__button__icon--like"]}`}
+              >
+                <path d="M3.66276 13.2135L9.82378 19.7065C11.0068 20.9532 12.9933 20.9532 14.1762 19.7065L20.3373 13.2135C22.5543 10.877 22.5543 7.08882 20.3373 4.75235C18.1203 2.41588 14.5258 2.41588 12.3088 4.75235V4.75235C12.1409 4.92925 11.8591 4.92925 11.6912 4.75235V4.75235C9.47422 2.41588 5.87976 2.41588 3.66276 4.75235C1.44576 7.08883 1.44576 10.877 3.66276 13.2135Z" />
+              </svg>
+              <span className={`${styles["post__button__count"]}`}>
+                {likeCount}
+              </span>
+            </button>
+            <button
+              className={`${styles["post__button"]} ${styles["post__button--comment"]} `}
+              onClick={handleCommentModal}
             >
               <svg
                 width="24"
@@ -293,24 +242,106 @@ const Post = ({
                 xmlns="http://www.w3.org/2000/svg"
                 className={styles["post__button__icon"]}
               >
-                <g clipPath="url(#clip0_1_19706)">
+                <g clipPath="url(#clip0_1_19708)">
                   <path
-                    d="M15 5L12 2M12 2L9 5M12 2L12 14"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M6 9H4V18C4 19.1046 4.89543 20 6 20H18C19.1046 20 20 19.1046 20 18V9H18"
+                    d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 13.4876 3.36093 14.891 4 16.1272L3 21L7.8728 20C9.10904 20.6391 10.5124 21 12 21Z"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
                 </g>
+                <defs>
+                  <clipPath id="clip0_1_19708">
+                    <rect width="24" height="24" fill="white" />
+                  </clipPath>
+                </defs>
               </svg>
+              <span className={styles["post__button__count"]}>3</span>
             </button>
+            <button
+              className={`${styles["post__button"]} ${
+                styles["post__button--bookmark"]
+              }  ${isBookmarked ? styles["post__button--active"] : ""}`}
+              onClick={!isBookmarked ? handleBookmark : handleUnbookmark}
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                className={`${styles["post__button__icon"]} ${styles["post__button__icon--bookmark"]}`}
+              >
+                <path d="M5 7C5 4.79086 6.79086 3 9 3H15C17.2091 3 19 4.79086 19 7V20.1683C19 20.9595 18.1248 21.4373 17.4592 21.0095L13.0815 18.1953C12.4227 17.7717 11.5773 17.7717 10.9185 18.1953L6.54076 21.0095C5.87525 21.4373 5 20.9595 5 20.1683V7Z" />
+              </svg>
+              <span className={styles["post__button__count"]}>
+                {bookmarkCount}
+              </span>
+            </button>
+            {userInfo.isMember && (
+              <button
+                className={`${styles["post__button"]} ${
+                  styles["post__button--superlike"]
+                } ${isSuperLiked ? styles["post__button--active"] : ""}`}
+                onClick={!isSuperLiked ? handleSuperLike : handleUnSuperLike}
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className={`${styles["post__button__icon"]} ${styles["post__button__icon--superlike"]}`}
+                >
+                  <g clipPath="url(#clip0_1_20462)">
+                    <path
+                      d="M12 2L15.1035 8.72839L22.4616 9.60081L17.0216 14.6316L18.4656 21.8992L12 18.28L5.53437 21.8992L6.97843 14.6316L1.53839 9.60081L8.89651 8.72839L12 2Z"
+                      strokeLinejoin="round"
+                    />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_1_20462">
+                      <rect width="24" height="24" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+                <span className={styles["post__button__count"]}>
+                  {superLikedCount}
+                </span>
+              </button>
+            )}
+
+            <div className={styles["post__share-container"]}>
+              <button
+                className={`${styles["post__button"]} ${styles["post__button--share"]}`}
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className={styles["post__button__icon"]}
+                >
+                  <g clipPath="url(#clip0_1_19706)">
+                    <path
+                      d="M15 5L12 2M12 2L9 5M12 2L12 14"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M6 9H4V18C4 19.1046 4.89543 20 6 20H18C19.1046 20 20 19.1046 20 18V9H18"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </g>
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
