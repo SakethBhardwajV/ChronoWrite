@@ -94,7 +94,7 @@ const registerUser = asyncHandler(async (req, res) => {
     res,
     email,
     "Verify your email",
-    `http://localhost:5173/verify/${user._id}`
+    `https://chrono-write.onrender.com/verify/${user._id}`
   );
 
   if (user) {
