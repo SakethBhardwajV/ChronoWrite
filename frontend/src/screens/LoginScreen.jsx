@@ -6,6 +6,7 @@ import FormInput from "../components/FormInput";
 import Button from "../components/Button";
 import { useLoginMutation } from "../slices/userApiSlice";
 import { setCredentials } from "../slices/authSlice";
+import { toast } from "react-toastify";
 const LoginScreen = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -34,7 +35,7 @@ const LoginScreen = () => {
       dispatch(setCredentials({ ...res }));
       navigate("/home");
     } catch (err) {
-      console.error(err?.data?.message || err.error);
+      toast.error(err?.data?.message || err.error);
     }
   };
 
