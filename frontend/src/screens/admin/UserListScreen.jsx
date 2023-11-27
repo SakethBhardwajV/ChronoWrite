@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import styles from "../../styles/UserListScreen.module.css";
-import ProfileNavbar from "../../components/ProfileNavBar";
+import ProfileNavbar from "../../components/ProfileNavbar";
 import {
   useGetAllUsersQuery,
   useMakeMemberMutation,

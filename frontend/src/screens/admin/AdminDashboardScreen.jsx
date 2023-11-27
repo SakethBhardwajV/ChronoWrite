@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import styles from "../../styles/AdminDashboardScreen.module.css";
-import ProfileNavbar from "../../components/ProfileNavBar";
+import ProfileNavbar from "../../components/ProfileNavbar.jsx";
 import { useGetAllUsersQuery } from "../../slices/userApiSlice";
 import { useGetAllPostsQuery } from "../../slices/postApiSlice";
 
